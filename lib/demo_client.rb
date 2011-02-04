@@ -12,3 +12,4 @@ end
 io = TCPSocket.open("localhost",1234)
 client = DemoClient.new(io)
 client.start
+client.connect

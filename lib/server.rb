@@ -1,12 +1,13 @@
 # this is the server part of the SAP
 # it implements the state machine for the server
+# this is an abstract class
 require 'common'
 
 # this is an bastract class
-# to implement : connect,disconnect,reset,atr,apdu
-# TODO : respect max message size (SAP chapter 4.1.1)
+# TODO : respect max message size
 class Server < SAP
 
+  # make the class abstract
   private :initialize
 
   # create the SAP server
@@ -38,15 +39,36 @@ class Server < SAP
         # get client max message size
         max_msg_size = (message[:payload][0][:value][0]<<8)+message[:payload][0][:value][1]
         log("server","incoming connection request (max message size = #{max_msg_size})",3)
-        # commection response message
-        payload = []
-        payload << ["ConnectionStatus",[0x00]]
-        payload << ["MaxMsgSize",message[:payload][0][:value]]
-        response = create_message("CONNECT_RESP",payload)
-        # send response
-        send(response)
-        set_state :idle
-        log("server","connection established",3)
+        # negociate MaxMsgSize
+        if max_msg_size>@max_msg_size then
+          # send my max size
+          # connection response message
+          payload = []
+          # ["ConnectionStatus",["Error, Server does not support maximum message size"]]
+          payload << [0x01,[0x02]]
+          # ["MaxMsgSize",[size]]
+          payload << [0x00,[@max_msg_size>>8,@max_msg_size&0xff]]
+          # send response
+          response = create_message("CONNECT_RESP",payload)
+          send(response)
+          set_state :not_connected
+          log("server","connection refused",3)
+        else
+          # accept the value
+          @max_msg_size = max_msg_size
+          # connection response message
+          payload = []
+          # ["ConnectionStatus",["OK, Server can fulfill requirements"]]
+          payload << [0x01,[0x00]]
+          # ["MaxMsgSize",[size]]
+          payload << [0x00,[@max_msg_size>>8,@max_msg_size&0xff]]
+          # send response
+          response = create_message("CONNECT_RESP",payload)
+          send(response)
+          set_state :idle
+          log("server","connection established",3)
+        end
+        
       when "STATUS_IND"
       else
         raise "not implemented or unknown message type : #{message[:name]}"

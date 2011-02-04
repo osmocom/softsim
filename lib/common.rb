@@ -8,11 +8,19 @@ require 'stringio'
 # - message creation
 # - message parsing
 # - sending and recieving messages
+# to implement :
+# - state machine (client/server)
+# - connect,disconnect,reset,atr,apdu
 
-# should be an abstract class
+# SAP common architecture
 class SAP
 
+  # make the class abstract
   private :initialize
+
+#===============
+#== constants ==
+#===============
   
   # SAP table 5.16
   CONNECTION_STATUS = { 0x00 => "OK, Server can fulfill requirements",
@@ -123,8 +131,9 @@ class SAP
   add_message_type("SET_TRANSPORT_PROTOCOL_REQ",true,0x13,[[0x09,true]])
   add_message_type("SET_TRANSPORT_PROTOCOL_RESP",false,0x14,[[0x02,true]])
 
-  # message format (hash)
-  # message type + :payload = (array of paramerter type + :value)
+#=================
+#== SAP methods ==
+#=================
 
   # create a new SAP client/server
   # - io : the Input/Output to monitor
@@ -170,11 +179,60 @@ class SAP
     end
   end
 
+  def set_state (new_state)
+    if @state then
+      log("state","state changed from #{@state} to #{new_state}",2)
+    else
+      log("state","state set to #{new_state}",2)
+    end
+    @state = new_state
+  end
+
+#==================
+#== to implement ==
+#==================
+
   # the state machine that has to be implemented
   # SAP figure 4.13
   def state_machine(message)
     raise NotImplementedError
   end
+
+  # client : connect to SAP server
+  # server : connect to SIM
+  # return : successfull connection
+  def connect
+    raise NotImplementedError
+  end
+
+  # client : disconnect from SAP server
+  # server : disconnect from SIM card
+  # return : successfull disconnection
+  def disconnect
+    raise NotImplementedError
+  end
+
+  # disconnect synonime
+  def close
+    return disconnect
+  end
+
+  def atr
+    raise NotImplementedError
+  end
+
+  def apdu(apdu)
+    raise NotImplementedError
+  end
+
+  # methods not so important yet : reset, power_on, power_off, transfer_protocol
+
+#==============
+#== messages ==
+#==============
+
+  # message format (hash)
+  # message type + :payload = (array of paramerter type + :value)
 
   # create a message
   # - type : message id or name
@@ -321,9 +379,9 @@ class SAP
 
   end
 
-  #=========
-  #== LOG ==
-  #=========
+#=========
+#== log ==
+#=========
 
   # verbosity
   # - 0 : nothing
@@ -342,14 +400,9 @@ class SAP
     end
   end
 
-  def set_state (new_state)
-    if @state then
-      log("state","state changed from #{@state} to #{new_state}",2)
-    else
-      log("state","state set to #{new_state}",2)
-    end
-    @state = new_state
-  end
+#===========
+#== utils ==
+#===========
 
   # return hex representation
   def hex(data)

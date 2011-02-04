@@ -2,10 +2,11 @@
 # it implements the state machine for the client
 require 'common'
 
-# this is an bastract class
-# to implement : connect,disconnect,reset,atr,apdu
+# this is an abstract class
+# TODO : verify state before sending, respect max size
 class Client < SAP
 
+  # make the class abstract
   private :initialize
   
   def initialize(io)
@@ -21,8 +22,11 @@ class Client < SAP
   end
 
   def start
-    connect()
-    super
+    # start the client in another thread
+    thread = Thread.new do
+      super
+    end
+    thread.abort_on_exception = true
   end
 
   def state_machine(message)
@@ -31,47 +35,27 @@ class Client < SAP
     case message[:name]
     when "CONNECT_RESP"
       connection_status = message[:payload][0][:value][0]
+      max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
       # print response
       if message[:payload].size == 1 then
         log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]}",3)
       else
-        @max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
         log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]} (max message size = #{@max_msg_size})",3)
       end
       # verify response
-      if connection_status==0 and message[:payload].size==2 then # OK
+      if connection_status==0x00 and message[:payload].size==2 then
+        # OK, Server can fulfill requirements
+        log("client","connection to server succeded",3)
         set_state :idle
+      elsif connection_status==0x02 and message[:payload].size==2 then
+        # Error, Server does not support maximum message size
+        log("client","server can not handle size. adapting",3)
+        @max_msg_size = max_msg_size
+        set_state :not_connected
       else
         set_state :not_connected
         raise "connection error"
       end
-    when "STATUS_IND"
-
-      # save status change
-      @status = message[:parameters][0][:value][0]
-      @verbose.puts "new status : #{SAP::STATUS_CHANGE[@status]}"
-      @state = :idle
-
-      # if SIM reseted, ask for ATR
-      if @status == SAP::STATUS_CHANGE.index("Card reset") then
-        get_atr
-      end
-
-    when "ERROR_RESP"
-      case @state
-      when :connection_under_negociation
-        @case = :not_connected
-      else
-        @state = :idle
-      end
-    when "TRANSFER_ATR_RESP"
-      result = message[:parameters][0][:value][0]
-      @verbose.puts SAP::RESULT_CODE[result]
-      if result == SAP::RESULT_CODE.index("OK, request processed correctly") then
-        atr = message[:parameters][1][:value]
-        @verbose.puts atr.collect{|x| x.to_s(16).rjust(2,'0')}*' '
-      end
-      @state = :idle
     else
       raise "not implemented or unknown message type : #{message[:name]}"
     end
@@ -80,14 +64,21 @@ class Client < SAP
   # send CONNECT_REQ
   def connect
     log("client","connecting",3)
-    if @state == :not_connected then
-      connect = create_message("CONNECT_REQ",[["MaxMsgSize",[(@max_msg_size>>8)&0xff,@max_msg_size&0xff]]])
-      send(connect)
-      @state = :connection_under_negociation
-    else
-      @io.close
-      raise "can not connect. required state : not_connected, current state : #{@state}"
+    until @state==:idle do
+      if @state == :not_connected then
+        payload = []
+        # ["MaxMsgSize",[size]]
+        payload << [0x00,[(@max_msg_size>>8)&0xff,@max_msg_size&0xff]]
+        connect = create_message("CONNECT_REQ",payload)
+        send(connect)
+        set_state :connection_under_negociation
+      elsif @state!=:connection_under_negociation
+        raise "can not connect. required state : not_connected, current state : #{@state}"
+        return false
+      end
+      sleep 0.1
     end
+    return true
   end
 
   # send TRANSFER_ATR_REQ
