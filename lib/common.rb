@@ -156,9 +156,9 @@ class SAP
   # start listening the connection
   def start
     until @end do
-      log("task","select",3)
+      log("IO","select",3)
       activity = IO.select([@io])
-      log("task","activity",3)
+      log("IO","activity",3)
       begin
         input = activity[0][0].readpartial(4096)
       rescue EOFError
@@ -237,7 +237,7 @@ class SAP
   # create a message
   # - type : message id or name
   # - payload : array [parameter id or name, content]
-  def create_message(type,payload)
+  def create_message(type,payload=nil)
 
     # the type
     msg_type = nil
@@ -253,6 +253,7 @@ class SAP
 
     # the parameters
     message[:payload] = []
+    payload = [] unless payload
     payload.each do |parameter|
       param_type = nil
       if parameter[0].kind_of?(Fixnum) then

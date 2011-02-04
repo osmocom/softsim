@@ -3,7 +3,10 @@
 require 'common'
 
 # this is an abstract class
-# TODO : verify state before sending, respect max size
+# TODO :
+# - verify state before sending
+# - respect max size (and require min size)
+# - ERROR_RESP handling
 class Client < SAP
 
   # make the class abstract
@@ -45,7 +48,7 @@ class Client < SAP
       # verify response
       if connection_status==0x00 and message[:payload].size==2 then
         # OK, Server can fulfill requirements
-        log("client","connection to server succeded",3)
+        log("client","connected",3)
         set_state :idle
       elsif connection_status==0x02 and message[:payload].size==2 then
         # Error, Server does not support maximum message size
@@ -56,12 +59,15 @@ class Client < SAP
         set_state :not_connected
         raise "connection error"
       end
+    when "DISCONNECT_RESP"
+      log("client","disconnected",3)
+      set_state :not_connected
+      @end=true
     else
       raise "not implemented or unknown message type : #{message[:name]}"
     end
   end
 
-  # send CONNECT_REQ
   def connect
     log("client","connecting",3)
     until @state==:idle do
@@ -81,15 +87,18 @@ class Client < SAP
     return true
   end
 
-  # send TRANSFER_ATR_REQ
-  def get_atr
-    if @state == :idle then
-      connect = create_message("TRANSFER_ATR_REQ",[])
+  def disconnect
+    log("client","disconnecting",3)
+    if @state==:not_connected or @state==:connection_under_negociation then
+      raise "can not disconnect. must be connected, current state : #{@state}"
+      return false
+    else # send DISCONNECT_REQ
+      connect = create_message("DISCONNECT_REQ")
       send(connect)
-      @state = :processing_atr_request
-    else
-      @sap.close
-      raise "can request ATR. required state : idle, current state : #{@sate}"
+      until @state==:not_connected
+        sleep 0.1
+      end
+      return true
     end
   end
   

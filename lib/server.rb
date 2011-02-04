@@ -4,7 +4,13 @@
 require 'common'
 
 # this is an bastract class
-# TODO : respect max message size
+# TODO (not implemented) :
+# - respect max message size (and check minimum)
+# - refuse connection if card is missing
+# - server initiated disconnect (when programm want to exit or card is lost)
+# - transport protocol change
+# - power sim on/off or reset
+# - ERROR_RESP sending (instead of exception)
 class Server < SAP
 
   # make the class abstract
@@ -25,7 +31,7 @@ class Server < SAP
 
     # initiate the state machine (connect_req)
     set_state :not_connected
-    @max_msg_size = 0x0fff
+    @max_msg_size = 0xffff
 
   end
 
@@ -68,8 +74,11 @@ class Server < SAP
           set_state :idle
           log("server","connection established",3)
         end
-        
-      when "STATUS_IND"
+      when "DISCONNECT_REQ"
+          log("server","client disconneting",3)
+          response = create_message("DISCONNECT_RESP")
+          send(response)
+          set_state :not_connected
       else
         raise "not implemented or unknown message type : #{message[:name]}"
       end
