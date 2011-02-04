@@ -126,7 +126,9 @@ class SAP
   # message format (hash)
   # message type + :payload = (array of paramerter type + :value)
 
-  def initialize
+  # create a new SAP client/server
+  # - io : the Input/Output to monitor
+  def initialize(io)
 
     # the verbose output
     #@verbose = StringIO.new # no output
@@ -134,7 +136,7 @@ class SAP
 
     # this has to be defined in child class
     # @socket can be any IO
-    @socket = nil
+    @io = io
 
     # the socket loop
     @end = false
@@ -146,13 +148,13 @@ class SAP
   def start
     until @end do
       log("task","select",3)
-      activity = IO.select([@socket])
+      activity = IO.select([@io])
       log("task","activity",3)
       begin
         input = activity[0][0].readpartial(4096)
       rescue EOFError
         $stderr.puts "device disconnected"
-        @socket.close
+        @io.close
         exit 0
       end
       messages = parse_message(input.unpack("C*"))
@@ -314,8 +316,8 @@ class SAP
     log("send","< (#{msg_bin.size}) #{hex(msg_bin)}",5)
 
     # send the message
-    @socket.write msg_bin.pack("C*")
-    @socket.flush
+    @io.write msg_bin.pack("C*")
+    @io.flush
 
   end
 
@@ -354,10 +356,10 @@ class SAP
     to_return = []
     if data.kind_of?(Integer) then
       to_return = data.to_s(16)
+    elsif data.kind_of?(String) then
+      to_return = hex(data.unpack("C*"))
     elsif data.kind_of?(Array) then
       to_return = data.collect{|x| x.to_s(16).rjust(2,'0')}*' '
-    elsif data.kind_of?(String) then
-      to_return = hex(data.pack("C*"))
     end
     return to_return
   end

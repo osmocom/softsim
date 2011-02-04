@@ -1,18 +1,18 @@
-#!/usr/bin/env ruby
-# client part of the SAP
+# this is the client part of the SAP
+# it implements the state machine for the client
 require 'common'
-require 'socket'
 
+# this is an bastract class
+# to implement : connect,disconnect,reset,atr,apdu
 class Client < SAP
 
+  private :initialize
   
-  def initialize
-    super
+  def initialize(io)
+    super(io)
 
+    # state of the state machine
     @state = nil
-
-    # open socket to write to
-    @socket = TCPSocket.open("localhost",1234)
 
     # initiate the state machine (connect_req)
     set_state :not_connected
@@ -36,7 +36,7 @@ class Client < SAP
         log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]}",3)
       else
         @max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
-        log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]} (MaxMsgSize #{hex(@max_msg_size)})",3)
+        log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]} (max message size = #{@max_msg_size})",3)
       end
       # verify response
       if connection_status==0 and message[:payload].size==2 then # OK
@@ -85,7 +85,7 @@ class Client < SAP
       send(connect)
       @state = :connection_under_negociation
     else
-      @socket.close
+      @io.close
       raise "can not connect. required state : not_connected, current state : #{@state}"
     end
   end
@@ -103,7 +103,3 @@ class Client < SAP
   end
   
 end
-
-# test application
-main = Client.new
-main.start
