@@ -21,7 +21,9 @@ class Client < SAP
     # initiate the state machine (connect_req)
     set_state :not_connected
     @max_msg_size = 0xffff
-    
+
+    # sim can be used
+    @sim_ok = false
   end
 
   def start
@@ -41,9 +43,9 @@ class Client < SAP
       max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
       # print response
       if message[:payload].size == 1 then
-        log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]}",3)
+        log("client","connection : #{CONNECTION_STATUS[connection_status]}",3)
       else
-        log("client","connection : #{SAP::CONNECTION_STATUS[connection_status]} (max message size = #{@max_msg_size})",3)
+        log("client","connection : #{CONNECTION_STATUS[connection_status]} (max message size = #{@max_msg_size})",3)
       end
       # verify response
       if connection_status==0x00 and message[:payload].size==2 then
@@ -63,6 +65,15 @@ class Client < SAP
       log("client","disconnected",3)
       set_state :not_connected
       @end=true
+    when "STATUS_IND"
+      status = message[:payload][0][:value][0]
+      log("client","new status : #{STATUS_CHANGE[status]}",3)
+      if status==0x01 then
+        # card reset
+        @sim_ok = true
+      else
+        @sim_ok = false
+      end
     else
       raise "not implemented or unknown message type : #{message[:name]}"
     end
@@ -70,6 +81,7 @@ class Client < SAP
 
   def connect
     log("client","connecting",3)
+    # wait to be connected
     until @state==:idle do
       if @state == :not_connected then
         payload = []
@@ -82,7 +94,11 @@ class Client < SAP
         raise "can not connect. required state : not_connected, current state : #{@state}"
         return false
       end
-      sleep 0.1
+      sleep @wait_time
+    end
+    # wait for the sim to be ready
+    until @sim_ok do
+      sleep @wait_time
     end
     return true
   end
@@ -96,10 +112,17 @@ class Client < SAP
       connect = create_message("DISCONNECT_REQ")
       send(connect)
       until @state==:not_connected
-        sleep 0.1
+        sleep @wait_time
       end
       return true
     end
   end
   
+  # add sim access protection
+  def set_state (state)
+    super(state)
+    if @state==:not_connected or @state==:connection_under_negociation then
+      @sim_ok = false
+    end
+  end
 end

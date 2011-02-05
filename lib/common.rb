@@ -150,6 +150,9 @@ class SAP
     # the socket loop
     @end = false
 
+    # the typical time to cwait befor a recheck (in sec)
+    @wait_time = 0.1
+
   end
 
 
@@ -169,12 +172,9 @@ class SAP
       messages = parse_message(input.unpack("C*"))
       messages.each do |message|
         # print message
-        log("get","> #{message[:name]}",4)
-        message[:payload].each do |parameter|
-          log("get","    #{parameter[:name]} : #{hex(parameter[:value])}",4)
-        end
+        print_message(message,true)
         # give message to handler
-        state_machine message
+        state_machine(message)
       end
     end
   end
@@ -301,7 +301,7 @@ class SAP
   # TODO : less then one message : nil pointer operation
   def parse_message(raw_message)
 
-    log("parse","> (#{raw_message.size}) #{hex(raw_message)}",5)
+    log("IO","> (#{raw_message.size}) #{hex(raw_message)}",5)
     # the message list to return
     messages = []
 
@@ -356,7 +356,33 @@ class SAP
     return messages
   end
   
-    # send the message
+  # print the text message
+  # - message : the message to print
+  # - incoming : is message comming in (else going out)
+  def print_message(message,incoming)
+    log("msg #{incoming ? 'get' : 'send'}","#{incoming ? '>' : '<'} #{message[:name]} (#{hex(message[:id])})",4)
+    message[:payload].each do |parameter|
+      value = case parameter[:id]
+      # get text value if possible
+      when 0x01 # "ConnectionStatus"
+        CONNECTION_STATUS[parameter[:value][0]] or "Reserved"
+      when 0x02 # "ResultCode"
+        RESULT_CODE[parameter[:value][0]] or "Reserved"
+      when 0x08 # "StatusChange"
+        STATUS_CHANGE[parameter[:value][0]] or "Reserved"
+      else
+        nil
+      end
+      if value then
+        value += " (#{hex(parameter[:value])})"
+      else
+        value = hex(parameter[:value])
+      end
+      log("msg #{incoming ? 'get' : 'send'}","    #{parameter[:name]} (#{hex(parameter[:id])}) : #{value}",4)
+    end
+  end
+
+  # send the message
   def send(message)
 
     # get binary
@@ -367,12 +393,9 @@ class SAP
       raise "message size (#{msg_bin.size}) exceeds maximun (#{@max_msg_size})"
     end
 
-    # print the output
-    log("send","< #{message[:name]}",4)
-    message[:payload].each do |parameter|
-      log("send","    #{parameter[:name]} : #{hex(parameter[:value])}",4)
-    end
-    log("send","< (#{msg_bin.size}) #{hex(msg_bin)}",5)
+    # print message
+    print_message(message,false)
+    log("IO","< (#{msg_bin.size}) #{hex(msg_bin)}",5)
 
     # send the message
     @io.write msg_bin.pack("C*")
@@ -409,7 +432,7 @@ class SAP
   def hex(data)
     to_return = []
     if data.kind_of?(Integer) then
-      to_return = data.to_s(16)
+      to_return = data.to_s(16).rjust(2,'0')
     elsif data.kind_of?(String) then
       to_return = hex(data.unpack("C*"))
     elsif data.kind_of?(Array) then

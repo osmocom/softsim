@@ -73,6 +73,13 @@ class Server < SAP
           send(response)
           set_state :idle
           log("server","connection established",3)
+          # send status
+          payload = []
+          # ["StatusChange",["Card reset"]]
+          payload << [0x08,[0x01]]
+          response = create_message("STATUS_IND",payload)
+          send(response)
+          log("server","SIM ready (reset)",3)
         end
       when "DISCONNECT_REQ"
           log("server","client disconneting",3)
