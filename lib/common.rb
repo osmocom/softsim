@@ -142,17 +142,17 @@ class SAP
     # the verbose output
     #@verbose = StringIO.new # no output
     @verbose = $> # std output
-
     # this has to be defined in child class
     # @socket can be any IO
     @io = io
-
     # the socket loop
     @end = false
-
     # the typical time to cwait befor a recheck (in sec)
     @wait_time = 0.1
-
+    # the input buffer containing the incoming messages
+    @buffer_in = []
+    # incoming message queue
+    @messages_in = []
   end
 
 
@@ -164,17 +164,24 @@ class SAP
       log("IO","activity",3)
       begin
         input = activity[0][0].readpartial(4096)
+        log("IO","> (#{input.size}) #{hex(input)}",5)
+        @buffer_in += input.unpack("C*")
       rescue EOFError
         $stderr.puts "device disconnected"
         @io.close
         exit 0
       end
-      messages = parse_message(input.unpack("C*"))
-      messages.each do |message|
-        # print message
-        print_message(message,true)
-        # give message to handler
-        state_machine(message)
+      # parse the message from @buffer_in to @messages_in
+      parse_messages
+      # wait until the buffer_in is empty before processing the messages
+      if @buffer_in.size==0 then
+        # process messages
+        while message=@messages_in.shift do
+          # print message
+          print_message(message,true)
+          # give message to handler
+          state_machine(message)
+        end
       end
     end
   end
@@ -301,53 +308,54 @@ class SAP
     return msg_bin
   end
 
-  # parse a message (in byte array)
-  # it's possible to has more or less then one message
-  # a recusrive call is used for this
-  # TODO : less then one message : nil pointer operation
-  def parse_message(raw_message)
+  # parse messages
+  # input is @buffer_in (in byte array)
+  # parsed messages are added to @messages_in
+  def parse_messages
 
-    log("IO","> (#{raw_message.size}) #{hex(raw_message)}",5)
-    # the message list to return
-    messages = []
-
-    raise "empty message" if raw_message.length==0
-
+    # message header is requiered
+    return if @buffer_in.length<4
 
     # get message_type from id
-    msg_id = raw_message[0]
+    msg_id = @buffer_in[0]
     msg_type = MESSAGES.collect{|x| x[:id]==msg_id ? x : nil}.compact
     raise "message type for id #{msg_id} not found" unless msg_type.size==1
     message = msg_type[0].dup
 
     # the number of parameters (+ verification)
-    nb_param = raw_message[1]
+    nb_param = @buffer_in[1]
     min_nb_param = message[:parameters].collect{|x| x[1] ? x : nil}.compact.size
     max_nb_param = message[:parameters].size
     raise "wrong number of parameters #{nb_param}" if nb_param<min_nb_param or nb_param>max_nb_param
 
     # the reservered field
-    raise "reservered field in message used (#{raw_message[2,2]})" unless raw_message[2,2]==[0,0]
+    raise "reservered field in message used (#{@buffer_in[2,2]})" unless @buffer_in[2,2]==[0,0]
 
     # get each parameter
     message[:payload] = []
     seek = 4 # beginning of next parameter
     nb_param.times do
+      # parameter header requiered
+      return if @buffer_in.length<seek+4
       # get id then type
-      param_id = raw_message[seek]
+      param_id = @buffer_in[seek]
       param_type = PARAMETERS.collect{|x| x[:id]==param_id ? x : nil}.compact
       raise "parameter type for id #{param_id} not found" unless param_type.size==1
       parameter = param_type[0].dup
       # check reserved field
-      raise "reserved parameter field used" unless raw_message[seek+1]==0
+      raise "reserved parameter field used" unless @buffer_in[seek+1]==0
       # get and check length
-      param_length = (raw_message[seek+2]<<8)+raw_message[seek+3]
-      raise "wrong param length : #{param_length} instead of #{parameter[:length]}" unless (parameter[:length]==-1 or parameter[:length]==param_length)
-      # get content
-      parameter[:value]=raw_message[seek+4,param_length]
+      param_length = (@buffer_in[seek+2]<<8)+@buffer_in[seek+3]
+      raise "wrong parameter length : #{param_length} instead of #{parameter[:length]}" unless (parameter[:length]==-1 or parameter[:length]==param_length)
+      # parameter value required
+      return if @buffer_in.length<seek+4+param_length
+      # get parameter value
+      parameter[:value]=@buffer_in[seek+4,param_length]
       # verify padding
       padding_size = 4-((1+1+2+param_length)%4)
-      padding=raw_message[seek+4+param_length,padding_size]
+      # padding required
+      return if @buffer_in.length<seek+4+param_length+padding_size
+      padding=@buffer_in[seek+4+param_length,padding_size]
       raise "padding not empty : (#{padding_size}) #{hex(padding)}" unless padding.count{|x| x==0}==padding_size
       # next parameter
       message[:payload] << parameter
@@ -355,11 +363,12 @@ class SAP
     end
 
     # add message to message list
-    messages << message
-    # get rest of the message if there are any
-    messages += parse_message(raw_message[seek..-1]) if raw_message.size>seek+1
+    @messages_in << message
+    # get rid of the decoded data
+    @buffer_in = @buffer_in[seek..-1]
+    # get rest of the messages if there are any
+    parse_messages if @buffer_in.size>0
 
-    return messages
   end
   
   # print the text message
