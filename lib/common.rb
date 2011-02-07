@@ -217,10 +217,16 @@ class SAP
     return disconnect
   end
 
+  # client : ask for the ATR from SAP server (must be connected)
+  # server : get ATR from SIM card
+  # return : ATR
   def atr
     raise NotImplementedError
   end
 
+  # client : send APDU request to SAP server and get response
+  # server : send APDU request to SIM and get response
+  # return : APDU response
   def apdu(apdu)
     raise NotImplementedError
   end

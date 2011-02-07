@@ -111,6 +111,13 @@ class Client < SAP
         #TODO : raise error, or retry later ?
       end
       set_state :idle
+    when "ERROR_RESP"
+      log("error","got an error response",1)
+      if @state==:connection_under_negociation then
+        set_state :not_connected
+      elsif @state!=:not_connected and @state!=:idle then
+        set_state :idle
+      end
     else
       raise "not implemented or unknown message type : #{message[:name]}"
     end

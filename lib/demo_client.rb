@@ -2,15 +2,9 @@
 require 'client'
 require 'socket'
 
-class DemoClient < Client
-  def initialize(io)
-    super(io)
-  end
-end
-
 # demo application, using TCP socket
 io = TCPSocket.open("localhost",1234)
-client = DemoClient.new(io)
+client = Client.new(io)
 client.start
 client.connect
 atr = client.atr
@@ -21,3 +15,4 @@ puts "APDU request : #{apdu_req.collect{|x| x.to_s(16).rjust(2,'0')}*' '}"
 apdu_resp = client.apdu(apdu_req)
 puts apdu_resp ? "APDU response : #{apdu_resp.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get APDu response"
 client.disconnect
+io.close

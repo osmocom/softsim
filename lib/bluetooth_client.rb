@@ -1,5 +1,9 @@
+#!/usr/bin/env ruby
+require 'client'
+#sudo aptitude install libdbus-ruby
 require 'dbus'
 
+# class to connect to BT SAP server using BlueZ over dbus
 class BluetoothClient < File
 
   # bluetooth SAP UUID
@@ -248,3 +252,18 @@ class BluetoothClient < File
   end
 
 end
+
+# demo application, using BT
+io = BluetoothClient.new
+client = Client.new(io)
+client.start
+client.connect
+atr = client.atr
+puts atr ? "ATR : #{atr.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get ATR"
+# select MF
+apdu_req = [0xA0,0xA4,0x00,0x00,0x02,0x3F,0x00]
+puts "APDU request : #{apdu_req.collect{|x| x.to_s(16).rjust(2,'0')}*' '}"
+apdu_resp = client.apdu(apdu_req)
+puts apdu_resp ? "APDU response : #{apdu_resp.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get APDu response"
+client.disconnect
+io.close
