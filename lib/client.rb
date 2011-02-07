@@ -34,11 +34,32 @@ class Client < SAP
     thread.abort_on_exception = true
   end
 
+  # add sim access protection
+  def set_state (state)
+    super(state)
+    if @state==:not_connected or @state==:connection_under_negociation then
+      @sim_ok = false
+    end
+  end
+
+  # verify result code
+  def result_ok?(message)
+    # is it a ResultCode
+    raise "message does not contains a result code" unless message[:payload][0][:id]==0x02
+    if message[:payload][0][:value][0]==0x00 then
+      return true
+    else
+      log("error","message result code : #{RESULT_CODE[message[:payload][0][:value][0]]}",1)
+      return false
+    end
+  end
+
   def state_machine(message)
     # check direction
     raise "got client to server message" unless message[:server_to_client]
     case message[:name]
     when "CONNECT_RESP"
+      raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:connection_under_negociation
       connection_status = message[:payload][0][:value][0]
       max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
       # print response
@@ -74,6 +95,14 @@ class Client < SAP
       else
         @sim_ok = false
       end
+    when "TRANSFER_ATR_RESP"
+      raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:processing_atr_request
+      if result_ok?(message) then
+        @atr = message[:payload][1][:value]
+      else
+        #TODO : raise error, or retry later ?
+      end
+      set_state :idle
     else
       raise "not implemented or unknown message type : #{message[:name]}"
     end
@@ -118,11 +147,20 @@ class Client < SAP
     end
   end
   
-  # add sim access protection
-  def set_state (state)
-    super(state)
-    if @state==:not_connected or @state==:connection_under_negociation then
-      @sim_ok = false
+  # return ATR (byts array)
+  def atr
+    if @state==:idle then
+      connect = create_message("TRANSFER_ATR_REQ")
+      send(connect)
+      set_state :processing_atr_request
+      # wait for the ATR
+      until @state==:idle
+        sleep @wait_time
+      end
+      return @atr
+    else
+      raise "can not ask ATR. must be  in state idle, current state : #{@state}"
+      return nil
     end
   end
 end

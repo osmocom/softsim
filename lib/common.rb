@@ -430,7 +430,7 @@ class SAP
 
   # return hex representation
   def hex(data)
-    to_return = []
+    to_return = ""
     if data.kind_of?(Integer) then
       to_return = data.to_s(16).rjust(2,'0')
     elsif data.kind_of?(String) then

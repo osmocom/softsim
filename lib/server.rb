@@ -41,6 +41,7 @@ class Server < SAP
       raise "got server to client message" unless message[:client_to_server]
       case message[:name]
       when "CONNECT_REQ"
+        raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:not_connected
         set_state :connection_under_nogiciation
         # get client max message size
         max_msg_size = (message[:payload][0][:value][0]<<8)+message[:payload][0][:value][1]
@@ -73,19 +74,38 @@ class Server < SAP
           send(response)
           set_state :idle
           log("server","connection established",3)
-          # send status
-          payload = []
-          # ["StatusChange",["Card reset"]]
-          payload << [0x08,[0x01]]
-          response = create_message("STATUS_IND",payload)
-          send(response)
-          log("server","SIM ready (reset)",3)
+          # connect is responsible to send the status
+          connect()
         end
       when "DISCONNECT_REQ"
-          log("server","client disconneting",3)
-          response = create_message("DISCONNECT_RESP")
+        raise "msg #{message[:name]} in wrong state #{@state}" unless @state!=:not_connected and @state!=:connection_under_nogiciation
+        log("server","client disconneting",3)
+        response = create_message("DISCONNECT_RESP")
+        send(response)
+        set_state :not_connected
+      when "TRANSFER_ATR_REQ"
+        raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:idle
+        set_state :processing_atr_request
+        # atr should return ATR byte array, or error result code
+        atr_result = atr
+        if atr_result.kind_of?(Array) then
+
+          payload = []
+          # ["ResultCode",["OK, request processed correctly"]]
+          payload << [0x02,[0x00]]
+          # ["ATR",atr]
+          payload << [0x06,atr_result]
+          # send response
+          response = create_message("TRANSFER_ATR_RESP",payload)
           send(response)
-          set_state :not_connected
+        elsif atr_result.kind_of?(Integer) then
+          # ["ResultCode",[code from atr]]
+          response = create_message("TRANSFER_ATR_RESP",[[0x02,[atr_result]]])
+          send(response)
+        else
+          raise "unexpected answer #{atr_result.class} from atr"
+        end
+        set_state :idle
       else
         raise "not implemented or unknown message type : #{message[:name]}"
       end
