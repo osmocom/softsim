@@ -59,7 +59,7 @@ class Client < SAP
     raise "got client to server message" unless message[:server_to_client]
     case message[:name]
     when "CONNECT_RESP"
-      raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:connection_under_negociation
+      raise "msg #{message[:name]} in wrong state : #{@state}" unless @state==:connection_under_negociation
       connection_status = message[:payload][0][:value][0]
       max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
       # print response
@@ -96,9 +96,17 @@ class Client < SAP
         @sim_ok = false
       end
     when "TRANSFER_ATR_RESP"
-      raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:processing_atr_request
+      raise "msg #{message[:name]} in wrong state : #{@state}" unless @state==:processing_atr_request
       if result_ok?(message) then
         @atr = message[:payload][1][:value]
+      else
+        #TODO : raise error, or retry later ?
+      end
+      set_state :idle
+    when "TRANSFER_APDU_RESP"
+      raise "msg #{message[:name]} in wrong state : #{@state}" unless @state==:processing_apdu_request
+      if result_ok?(message) then
+        @apdu = message[:payload][1][:value]
       else
         #TODO : raise error, or retry later ?
       end
@@ -160,6 +168,25 @@ class Client < SAP
       return @atr
     else
       raise "can not ask ATR. must be  in state idle, current state : #{@state}"
+      return nil
+    end
+  end
+
+  # return the response of the apdu request
+  def apdu(request)
+    raise "APDU request empty" unless request and request.size>=5
+    if @state==:idle then
+      # ["CommandAPDU",[apdu]]
+      connect = create_message("TRANSFER_APDU_REQ",[[0x04,request]])
+      send(connect)
+      set_state :processing_apdu_request
+      # wait for the ATR
+      until @state==:idle
+        sleep @wait_time
+      end
+      return @apdu
+    else
+      raise "can not sen APDU request. must be  in state idle, current state : #{@state}"
       return nil
     end
   end

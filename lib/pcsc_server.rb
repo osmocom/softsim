@@ -75,6 +75,13 @@ class PCSCServer < Server
     return @card.info[:atr].unpack("C*")
   end
 
+  # send APDU and get response
+  def apdu(request)
+    raise "connect to card to send APDU" unless @card
+    response = @card.transmit(request.pack('C*')).unpack("C*")
+    return response
+  end
+
 end
 
 # demo application, using TCP socket

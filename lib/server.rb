@@ -88,23 +88,43 @@ class Server < SAP
         set_state :processing_atr_request
         # atr should return ATR byte array, or error result code
         atr_result = atr
+        payload = []
         if atr_result.kind_of?(Array) then
-
-          payload = []
           # ["ResultCode",["OK, request processed correctly"]]
           payload << [0x02,[0x00]]
           # ["ATR",atr]
           payload << [0x06,atr_result]
-          # send response
-          response = create_message("TRANSFER_ATR_RESP",payload)
-          send(response)
         elsif atr_result.kind_of?(Integer) then
           # ["ResultCode",[code from atr]]
-          response = create_message("TRANSFER_ATR_RESP",[[0x02,[atr_result]]])
-          send(response)
+          payload << [0x02,[atr_result]]
         else
           raise "unexpected answer #{atr_result.class} from atr"
         end
+        # send response
+        response = create_message("TRANSFER_ATR_RESP",payload)
+        send(response)
+        set_state :idle
+      when "TRANSFER_APDU_REQ"
+        raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:idle
+        set_state :processing_apdu_request
+        # apdu should return APDU response byte array, or error result code
+        raise "no APDU request in message" unless message[:payload].size==1
+        apdu_result = apdu(message[:payload][0][:value])
+        payload = []
+        if apdu_result.kind_of?(Array) then
+          # ["ResultCode",["OK, request processed correctly"]]
+          payload << [0x02,[0x00]]
+          # ["ResponseAPDU",apdu]
+          payload << [0x05,apdu_result]
+        elsif atr_result.kind_of?(Integer) then
+          # ["ResultCode",[code from atr]]
+          payload << [0x02,[apdu_result]]
+        else
+          raise "unexpected answer #{atr_result.class} from atr"
+        end
+        # send response
+        response = create_message("TRANSFER_APDU_RESP",payload)
+        send(response)
         set_state :idle
       else
         raise "not implemented or unknown message type : #{message[:name]}"
