@@ -163,7 +163,7 @@ class SAP
       activity = IO.select([@io])
       log("IO","activity",3)
       begin
-        input = activity[0][0].readpartial(4096)
+        input = activity[0][0].readpartial(@max_msg_size)
         log("IO","> (#{input.size}) #{hex(input)}",5)
         @buffer_in += input.unpack("C*")
       rescue EOFError
@@ -177,8 +177,6 @@ class SAP
       if @buffer_in.size==0 then
         # process messages
         while message=@messages_in.shift do
-          # print message
-          print_message(message,true)
           # give message to handler
           state_machine(message)
         end
@@ -313,6 +311,7 @@ class SAP
   # parsed messages are added to @messages_in
   def parse_messages
 
+    log("parsing",hex(@buffer_in),4)
     # message header is requiered
     return if @buffer_in.length<4
 
@@ -326,10 +325,10 @@ class SAP
     nb_param = @buffer_in[1]
     min_nb_param = message[:parameters].collect{|x| x[1] ? x : nil}.compact.size
     max_nb_param = message[:parameters].size
-    raise "wrong number of parameters #{nb_param}" if nb_param<min_nb_param or nb_param>max_nb_param
+    raise "wrong number of parameters : #{nb_param} instead of #{min_nb_param}-#{max_nb_param}" if nb_param<min_nb_param or nb_param>max_nb_param
 
     # the reservered field
-    raise "reservered field in message used (#{@buffer_in[2,2]})" unless @buffer_in[2,2]==[0,0]
+    log("parsing","reservered field in message used : (#{hex(@buffer_in[2,2])})",4) unless @buffer_in[2,2]==[0,0]
 
     # get each parameter
     message[:payload] = []
@@ -343,7 +342,7 @@ class SAP
       raise "parameter type for id #{param_id} not found" unless param_type.size==1
       parameter = param_type[0].dup
       # check reserved field
-      raise "reserved parameter field used" unless @buffer_in[seek+1]==0
+      log("parsing","reservered field in parameter used : #{hex(@buffer_in[seek+1,1])}",4) unless @buffer_in[seek+1]==0
       # get and check length
       param_length = (@buffer_in[seek+2]<<8)+@buffer_in[seek+3]
       raise "wrong parameter length : #{param_length} instead of #{parameter[:length]}" unless (parameter[:length]==-1 or parameter[:length]==param_length)
@@ -362,6 +361,9 @@ class SAP
       seek += 1+1+2+param_length+padding_size
     end
 
+    # print message
+    log("parsed",hex(@buffer_in[0,seek]),4)
+    print_message(message,true)
     # add message to message list
     @messages_in << message
     # get rid of the decoded data

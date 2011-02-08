@@ -2,9 +2,16 @@
 require 'client'
 #sudo aptitude install libdbus-ruby
 require 'dbus'
+#sudo gem install serialport (http://rubygems.org/gems/serialport)
+require 'rubygems'
+require 'serialport'
 
 # class to connect to BT SAP server using BlueZ over dbus
-class BluetoothClient < File
+# design note : can not inherit SerialPort
+# TODO :
+# - scan only for BTSAP
+# - test if paired device is available
+class BluetoothClient
 
   # bluetooth SAP UUID
   SAP_UUID = "0000112d-0000-1000-8000-00805f9b34fb"
@@ -12,15 +19,14 @@ class BluetoothClient < File
   # scan duration in s
   SCAN_DURATION = 5
 
+  # select a device
   def initialize
-    
+
     @bt_service = BluetoothClient.service()
     @bt_manager = BluetoothClient.manager(@bt_service)
     @bt_adapter = BluetoothClient.adapter(@bt_service,@bt_manager)
     @bt_device_addr = BluetoothClient.device(@bt_service,@bt_adapter)
-    connect() # also creates @rfcomm
 
-    super(@rfcomm,"r+")
   end
 
   # get bluetooth service
@@ -134,7 +140,7 @@ class BluetoothClient < File
     end
 
     # check for SAP
-    $stdout.puts "SAP existing ? :"
+    $stdout.puts "SAP capable devices :"
     sap_devices = []
     devices.each do |address,properties|
 
@@ -208,6 +214,7 @@ class BluetoothClient < File
     end
 
     # create device
+    # return : port name
     @bt_sap = @bt_service.object(sap_object)
     @bt_sap.introspect
 
@@ -238,12 +245,12 @@ class BluetoothClient < File
     @paired = @bt_sap.GetProperties()[0]["Paired"]
     @trusted = @bt_sap.GetProperties()[0]["Trusted"]
 
+    return @rfcomm
+
   end
 
+  # close port
   def close()
-    # close file
-    super
-
     @bt_sap.default_iface = "org.bluez.Serial"
     #disconnect the serial port
     @bt_sap.Disconnect(@rfcomm)
@@ -253,8 +260,15 @@ class BluetoothClient < File
 
 end
 
+=begin
+to monitor bluetooth traffic
+sudo aptitude install bluez-hcidump
+sudo hcidump -x -i hci0 rfcomm
+=end
+
 # demo application, using BT
-io = BluetoothClient.new
+bt = BluetoothClient.new
+io = SerialPort.new(bt.connect)
 client = Client.new(io)
 client.start
 client.connect
@@ -267,3 +281,4 @@ apdu_resp = client.apdu(apdu_req)
 puts apdu_resp ? "APDU response : #{apdu_resp.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get APDu response"
 client.disconnect
 io.close
+bt.close

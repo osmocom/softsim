@@ -61,15 +61,16 @@ class Client < SAP
     when "CONNECT_RESP"
       raise "msg #{message[:name]} in wrong state : #{@state}" unless @state==:connection_under_negociation
       connection_status = message[:payload][0][:value][0]
-      max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
+      max_msg_size = nil
       # print response
       if message[:payload].size == 1 then
         log("client","connection : #{CONNECTION_STATUS[connection_status]}",3)
-      else
-        log("client","connection : #{CONNECTION_STATUS[connection_status]} (max message size = #{@max_msg_size})",3)
+      elsif message[:payload].size == 2 then
+        max_msg_size = (message[:payload][1][:value][0]<<8)+message[:payload][1][:value][1]
+        log("client","connection : #{CONNECTION_STATUS[connection_status]} (max message size = #{max_msg_size})",3)
       end
       # verify response
-      if connection_status==0x00 and message[:payload].size==2 then
+      if connection_status==0x00 then
         # OK, Server can fulfill requirements
         log("client","connected",3)
         set_state :idle
