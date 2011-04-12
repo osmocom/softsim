@@ -12,8 +12,8 @@ class Client < SAP
   # make the class abstract
   private :initialize
   
-  def initialize(io)
-    super(io)
+  def initialize(io,verbosity=SAP::VERBOSE)
+    super(io,verbosity)
 
     # state of the state machine
     @state = nil

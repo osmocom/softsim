@@ -137,11 +137,12 @@ class SAP
 
   # create a new SAP client/server
   # - io : the Input/Output to monitor
-  def initialize(io)
+  def initialize(io,verbosity=VERBOSE)
 
     # the verbose output
     #@verbose = StringIO.new # no output
     @verbose = $> # std output
+    @verbosity = verbosity
     # this has to be defined in child class
     # @socket can be any IO
     @io = io
@@ -435,7 +436,7 @@ class SAP
 
   # for the logs
   def log (group,message,level)
-    if VERBOSE>=level then
+    if @verbosity and @verbosity>=level then
       color = 95-level
       @verbose.puts "\e[1m\e[#{color}m[#{group}]\e[0m #{message}"
     end

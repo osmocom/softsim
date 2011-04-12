@@ -1,16 +1,13 @@
-#!/usr/bin/env ruby
 require 'client'
 #sudo aptitude install libdbus-ruby
 require 'dbus'
-#sudo gem install serialport (http://rubygems.org/gems/serialport)
-require 'rubygems'
-require 'serialport'
 
 # class to connect to BT SAP server using BlueZ over dbus
+# connect will establish connection to BTSAP server, and return the serial port
 # design note : can not inherit SerialPort
 # TODO :
 # - scan only for BTSAP
-# - test if paired device is available
+# - test if paired device is available before scanning
 class BluetoothClient
 
   # bluetooth SAP UUID
@@ -259,26 +256,3 @@ class BluetoothClient
   end
 
 end
-
-=begin
-to monitor bluetooth traffic
-sudo aptitude install bluez-hcidump
-sudo hcidump -x -i hci0 rfcomm
-=end
-
-# demo application, using BT
-bt = BluetoothClient.new
-io = SerialPort.new(bt.connect)
-client = Client.new(io)
-client.start
-client.connect
-atr = client.atr
-puts atr ? "ATR : #{atr.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get ATR"
-# select MF
-apdu_req = [0xA0,0xA4,0x00,0x00,0x02,0x3F,0x00]
-puts "APDU request : #{apdu_req.collect{|x| x.to_s(16).rjust(2,'0')}*' '}"
-apdu_resp = client.apdu(apdu_req)
-puts apdu_resp ? "APDU response : #{apdu_resp.collect{|x| x.to_s(16).rjust(2,'0')}*' '}" :  "could not get APDu response"
-client.disconnect
-io.close
-bt.close

@@ -27,7 +27,17 @@ class PCSCServer < Server
     # get PCSC context
     context = Smartcard::PCSC::Context.new
     # get all readers
-    readers = context.readers
+    begin
+      readers = context.readers
+    rescue Smartcard::PCSC::Exception => e
+      puts "no reader available. please connect a card reader"
+      begin
+        readers = context.readers
+      rescue Smartcard::PCSC::Exception => e
+        sleep 1
+        retry
+      end
+    end
     # one reader required
     if readers.size==0 then
       puts "no reader available. connect a reader"
@@ -49,16 +59,16 @@ class PCSCServer < Server
       @card = Smartcard::PCSC::Card.new(context,reader,:exclusive,:t0)
     rescue Smartcard::PCSC::Exception => e
       # wait for a card
-        puts "no card available. insert card"
-        # info client ["StatusChange",["Card not accessible"]]
-        status = create_message("STATUS_IND",[[0x08,[0x02]]])
-        send(status)
-        begin
-          @card = Smartcard::PCSC::Card.new(context,reader,:exclusive,:t0)
-        rescue Smartcard::PCSC::Exception => e
-          sleep 1
-          retry
-        end
+      puts "no card available. insert card"
+      # info client ["StatusChange",["Card not accessible"]]
+      status = create_message("STATUS_IND",[[0x08,[0x02]]])
+      send(status)
+      begin
+        @card = Smartcard::PCSC::Card.new(context,reader,:exclusive,:t0)
+      rescue Smartcard::PCSC::Exception => e
+        sleep 1
+        retry
+      end
     end
 
     # card ready
@@ -85,7 +95,7 @@ class PCSCServer < Server
 end
 
 # demo application, using TCP socket
-socket = TCPServer.new("localhost",1234)
+socket = TCPServer.new("localhost",1337)
 io = socket.accept
 server = PCSCServer.new(io)
 server.start
