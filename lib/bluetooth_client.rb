@@ -1,6 +1,5 @@
-require 'client'
-#sudo aptitude install libdbus-ruby
-require 'dbus'
+require 'client' # SAP client
+require 'dbus' # libdbus-ruby
 
 # class to connect to BT SAP server using BlueZ over dbus
 # connect will establish connection to BTSAP server, and return the serial port
