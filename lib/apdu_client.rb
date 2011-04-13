@@ -5,11 +5,10 @@ require 'client'
 
 SAP_HOST = "localhost"
 SAP_PORT = "1337"
-APDU_HOST = "localhost"
-APDU_PORT = "1338"
+APDU_SOCKET = "/tmp/apdu.socket"
 
 # wait for a client to connect
-socket = TCPServer.new(APDU_HOST,APDU_PORT)
+socket = UNIXServer.new(APDU_SOCKET)
 io = socket.accept
 
 # create SAP client to SAP server
