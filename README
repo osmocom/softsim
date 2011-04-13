@@ -1,3 +1,53 @@
-== SIM2
+SAP is a ruby implementation of the BTSAP (Bluetooth SIM Access Profile) spec.
 
-You should document your project here.
+client and server share common contsants, functions, pricipiles
+this common part is defined in common.rb
+client.rb is a child of common.rb, it implements the client part of SAP
+server.rb is a child of common.rb, it implements the server part of SAP
+client.rb and server.rb do not work on there own, but are "interfaces"
+
+common.rb :
+- is contains the contanst for SAP, the method to create and parse the message,
+methods to get and send messages, and the state machine call
+- the verbosity is definied in this class in VERBOSE
+
+client.rb :
+- it implements the client side of the state machine
+- a IO to the server has to be provided
+- it provides the main functions : connect,atr,apdu,disconnect
+
+server.rb :
+- it implements the server part of the state machine
+- a IO to accept clients has to be provided
+- the main functions have to be implemented to
+
+bluetooth_client.rb :
+- it searches for bluetooth SAP servers and connects to it
+- a path to the serial port is provided
+- it used BlueZ over dbus (see file head for details)
+
+demo_client :
+- it's purpose it to test the client implementation (just the basics)
+- choose between :bt and :tcp if the head of the file
+- if :tcp is chosen, it will connect to a SAP server using a network socket
+- if :bt is chosen, it will connect to a SAP server using bluetooth
+(using bluetooth_client.rb)
+- the demo application will only connect to the server, get the ATR,
+send a single APDU, and disconnect
+
+demo_server.rb :
+- nothing implemented yet
+
+pcsc_server.rb :
+- this is a server implementation that uses a classic smart card reader to
+connect to the SIM
+- it uses a network port to listen for clients
+- the gem smartcard is used (see head for details)
+
+smartcard :
+gem smartcard 0.5.1 does not support the T=0 protocol.
+apply the patch to the gem (once extracted) and install it (use rake)
+
+STATE :
+- it does not implement the functions for the proactive SIM : power_on/off,
+reset , ...
