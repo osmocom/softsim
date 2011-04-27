@@ -44,10 +44,6 @@ connect to the SIM
 - it uses a network port to listen for clients
 - the gem smartcard is used (see head for details)
 
-smartcard :
-gem smartcard 0.5.1 does not support the T=0 protocol.
-apply the patch to the gem (once extracted) and install it (use rake)
-
 STATE :
 - it does not implement the functions for the proactive SIM : power_on/off,
 reset , ...

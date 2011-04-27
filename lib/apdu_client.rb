@@ -28,7 +28,7 @@ until @end do
     puts "> #{req.collect{|x| x.to_s(16).rjust(2,'0')}*' '}"
     resp = client.apdu(req)
     puts "< #{resp.collect{|x| x.to_s(16).rjust(2,'0')}*' '}"
-    io.puts resp.pack("C*")
+    io.write resp.pack("C*")
   rescue EOFError,Errno::EPIPE
     $stderr.puts "source disconnected"
     @end = true
