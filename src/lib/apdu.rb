@@ -117,10 +117,7 @@ module APDU
   def transmit(apdu)
 
     # send APDU
-    puts "< "+apdu.to_hex_disp if DEBUG
     resp = transmit_apdu(apdu)
-    puts "> "+resp.to_hex_disp if DEBUG
-
     # parse response
     response = resp[0..-3]
     sw1 = resp[-2]

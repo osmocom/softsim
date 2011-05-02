@@ -108,6 +108,7 @@ class Server < SAP
         atr_result = atr
         payload = []
         if atr_result.kind_of?(Array) then
+          log("ATR","#{hex(atr_result)}",1)
           # ["ResultCode",["OK, request processed correctly"]]
           payload << [0x02,[0x00]]
           # ["ATR",atr]
@@ -127,7 +128,9 @@ class Server < SAP
         set_state :processing_apdu_request
         # apdu should return APDU response byte array, or error result code
         raise "no APDU request in message" unless message[:payload].size==1
+        log("APDU","> #{hex(message[:payload][0][:value])}",1)
         apdu_result = apdu(message[:payload][0][:value])
+        log("APDU","< #{hex(apdu_result)}",1)
         payload = []
         if apdu_result.kind_of?(Array) then
           # ["ResultCode",["OK, request processed correctly"]]

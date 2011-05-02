@@ -18,22 +18,23 @@ along with SAP.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this program is there to start a server
-require 'socket'
-require 'pcsc_server'
-require 'sim_server'
 
-# the io the server should use (:tcp, :unix)
+# the io the server should use (:tcp,:unix)
 io_type = :tcp
-# the server to use (:pcsc, :sim)
+# the server to use (:pcsc,:sim)
 server_type = :pcsc
+# the verbosity (from common)
+$verbosity = 1
 
 # create the IO
 case io_type
 when :tcp
+  require 'socket'
   TCP_HOST = "localhost"
   TCP_PORT = "1337"
   socket = TCPServer.new(TCP_HOST,TCP_PORT)
 when :unix
+  require 'socket'
   UNIX = "/tmp/sap_server.socket"
   socket = UNIXServer.new(APDU_SOCKET)
 else
@@ -45,8 +46,10 @@ io = socket.accept
 
 case server_type
 when :pcsc
+  require 'pcsc_server'
   server = PCSCServer.new(io)
 when :sim
+  require 'sim_server'
   server = SIMServer.new(io)
 else
   raise "unkown server type"

@@ -30,8 +30,8 @@ class Client < SAP
   # make the class abstract
   private :initialize
   
-  def initialize(io,verbosity=SAP::VERBOSE)
-    super(io,verbosity)
+  def initialize(io)
+    super(io)
 
     # state of the state machine
     @state = nil
@@ -181,7 +181,7 @@ class Client < SAP
     end
   end
   
-  # return ATR (byts array)
+  # return ATR (byte array)
   def atr
     if @state==:idle then
       connect = create_message("TRANSFER_ATR_REQ")
@@ -191,6 +191,7 @@ class Client < SAP
       until @state==:idle
         sleep @wait_time
       end
+      log("ATR","#{hex(@atr)}",1)
       return @atr
     else
       raise "can not ask ATR. must be  in state idle, current state : #{@state}"
@@ -201,6 +202,7 @@ class Client < SAP
   # return the response of the apdu request
   def apdu(request)
     raise "APDU request empty" unless request and request.size>=5
+    log("APDU","< #{hex(request)}",1)
     if @state==:idle then
       # ["CommandAPDU",[apdu]]
       connect = create_message("TRANSFER_APDU_REQ",[[0x04,request]])
@@ -210,6 +212,7 @@ class Client < SAP
       until @state==:idle
         sleep @wait_time
       end
+      log("APDU","> #{hex(@apdu)}",1)
       return @apdu
     else
       raise "can not sen APDU request. must be  in state idle, current state : #{@state}"

@@ -16,8 +16,6 @@ along with SAP.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-require 'stringio'
-
 # the common part of SAP server and client
 # it includes :
 # - constants
@@ -155,12 +153,8 @@ class SAP
 
   # create a new SAP client/server
   # - io : the Input/Output to monitor
-  def initialize(io,verbosity=VERBOSE)
+  def initialize(io)
 
-    # the verbose output
-    #@verbose = StringIO.new # no output
-    @verbose = $> # std output
-    @verbosity = verbosity
     # this has to be defined in child class
     # @socket can be any IO
     @io = io
@@ -203,6 +197,7 @@ class SAP
     end
   end
 
+  # set the new state of the state machine
   def set_state (new_state)
     if @state then
       log("state","state changed from #{@state} to #{new_state}",2)
@@ -242,7 +237,7 @@ class SAP
   end
 
   # client : ask for the ATR from SAP server (must be connected)
-  # server : get ATR from SIM card
+  # server : get ATR from SIM card (or SAP result code)
   # return : ATR
   def atr
     raise NotImplementedError
@@ -450,13 +445,13 @@ class SAP
   # - 3 : inner task (green)
   # - 4 : messages (red)
   # - 5 : byte traffic
-  VERBOSE = 5
+  $verbosity = 5 unless $verbosity
 
   # for the logs
   def log (group,message,level)
-    if @verbosity and @verbosity>=level then
+    if $verbosity and $verbosity>=level then
       color = 95-level
-      @verbose.puts "\e[1m\e[#{color}m[#{group}]\e[0m #{message}"
+      puts "\e[1m\e[#{color}m[#{group}]\e[0m #{message}"
     end
   end
 
