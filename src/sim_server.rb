@@ -1,69 +1,8 @@
 #!/usr/bin/env ruby
-require 'server'
+require 'lib/server'
+require 'lib/apdu'
 require 'socket'
 require 'xml'
-
-# transform binary string into readable hex string
-class String
-  def to_hex_disp
-    to_return = ""
-    each_byte do |b|
-      to_return += b.to_s(16).rjust(2,"0")
-      to_return += " "
-    end
-    return to_return[0..-2].upcase
-  end
-
-  def to_hex
-    to_return = ""
-    each_byte do |b|
-      to_return += b.to_s(16).rjust(2,"0")
-    end
-    #to_return = "0x"+to_return
-    return to_return.downcase
-  end
-  
-  # convert a hexadecimal string into binary array
-  def hex2arr
-    arr = []
-    (self.length/2).times do |i|
-      arr << self[i*2,2].to_i(16)
-    end
-    return arr
-  end
-end
-
-# reverse the nibbles of each byte
-class Array
-  # print the nibbles (often BCD)
-  # - padding : the 0xf can be ignored (used as padding in BCD)
-  def nibble_str(padding=false)
-    # get nibble representation
-    to_return = collect { |b| (b&0x0F).to_s(16)+(b>>4).to_s(16) }
-    to_return = to_return.join
-    # remove the padding
-    to_return.gsub!('f',"") if padding
-    return to_return
-  end
-
-  def to_hex_disp
-    to_return = ""
-    each do |b|
-      to_return += b.to_s(16).rjust(2,"0")
-      to_return += " "
-    end
-    return to_return[0..-2].upcase
-  end
-
-  def to_hex
-    to_return = ""
-    each do |b|
-      to_return += b.to_s(16).rjust(2,"0")
-    end
-    #to_return = "0x"+to_return
-    return to_return.downcase
-  end
-end
 
 # SAP server using a SIM backup file
 class SIMServer < Server
@@ -93,7 +32,8 @@ class SIMServer < Server
     end
     
     # select MF
-    node = select([0x3f,0x00])
+    node = @card.find_first("/sim/file")
+    @selected = node
     @response = node.find_first("./header").content.hex2arr
 
     # card ready
@@ -184,44 +124,39 @@ class SIMServer < Server
   # nil is return if file does not exist or is unaccessible
   def select (id)
     response = nil
-    # get the current location
-    if @pwd then
-      # get current directory
-      dfs = [0x3f,0x5f,0x7f]
-      if dfs.include? @pwd["id"][0,2].to_i(16) then
-        current_directory = @pwd
-      else
-        current_directory = @pwd.find_first("..")
-      end
-      # find file
-      if result=current_directory.find_first("./file[@id='#{id.to_hex}']") then
-        # any file which is an immediate child of the current directory
-        response = result
-      elsif dfs.include? current_directory["id"][0,2].to_i(16) and result=current_directory.find_first("../file[@id='#{id.to_hex}']") then
-        # any DF which is an immediate child of the parent of the current DF
-        response = result
-      elsif result=current_directory.find_first("..") and result["id"]==id.to_hex then
-        # the parent of the current directory
-        response = result
-      elsif current_directory["id"]==id.to_hex then
-        # the current DF
-        response = current_directory
-      elsif id==[0x3f,0x00] then
-        # the MF
-        response = @card.find_first("/sim/file[@id='3f00']")
-      else
-        response = nil
-      end
-      @pwd = response if response
+    # get the current directory
+    dfs = [0x3f,0x5f,0x7f]
+    if dfs.include? @selected["id"][0,2].to_i(16) then
+      # selected of a DF
+      current_directory = @selected
     else
-      # only MF is accessible
-      if id==[0x3f,0x00] then
-        @pwd = @card.find_first("/sim/file[@id='3f00']")
-        response = @pwd
-      else
-        response=nil
-      end
+      # selected is an ED, DF is parent
+      current_directory = @selected.find_first("..")
     end
+      
+    # find file
+    if result=current_directory.find_first("./file[@id='#{id.to_hex}']") then
+      # any file which is an immediate child of the current directory
+      response = result
+    elsif dfs.include? current_directory["id"][0,2].to_i(16) and result=current_directory.find_first("../file[@id='#{id.to_hex}']") then
+      # any DF which is an immediate child of the parent of the current DF
+      response = result
+    elsif result=current_directory.find_first("..") and result["id"]==id.to_hex then
+      # the parent of the current directory
+      response = result
+    elsif current_directory["id"]==id.to_hex then
+      # the current DF
+      response = current_directory
+    elsif id==[0x3f,0x00] then
+      # the MF
+      response = @card.find_first("/sim/file[@id='3f00']")
+    else
+      # file not found
+      response = nil
+    end
+    # remember new selected file
+    @selected = response if response
+    
     return response
   end
 

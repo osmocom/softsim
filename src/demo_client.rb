@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # This programm will create a client which can be used to test servers
 require 'lib/client'
+require 'lib/apdu'
 
 #=================
 #== client type ==
