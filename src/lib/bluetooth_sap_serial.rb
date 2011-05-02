@@ -19,6 +19,11 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 require 'lib/client' # SAP client
 require 'dbus' # libdbus-ruby
+=begin
+to monitor bluetooth traffic
+sudo aptitude install bluez-hcidump
+sudo hcidump -x -i hci0 rfcomm
+=end
 
 # class to connect to BT SAP server using BlueZ over dbus
 # connect will establish connection to BTSAP server, and return the serial port
