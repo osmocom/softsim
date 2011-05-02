@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # This programm will create a client which can be used to test servers
-require 'client'
+require 'lib/client'
 
 #=================
 #== client type ==
@@ -62,6 +62,11 @@ A38 = [CLASS,0x88,0x00,0x00,0x10]
 
 # file address (TS 51.011 10.7, page 105)
 MF = [0x3F,0x00]
+  EF_ICCID = [0x2F,0xE2]
+  DF_GSM = [0x7F,0x20]
+    EF_IMSI = [0x6F,0x07] # TS 51.011 10.3.2
+  DF_TELECOM = [0x7F,0x10]
+    EF_MSISDN = [0x6F,0x40] # TS 51.011 10.5.5
 
 #=========================
 #== additionnal methods ==
@@ -217,8 +222,8 @@ end
 atr = @client.atr
 puts atr ? "ATR : #{atr.to_hex_disp}" :  "could not get ATR"
 # select MF
-apdu_req = [0xA0,0xA4,0x00,0x00,0x02,0x3F,0x00]
-transmit(SELECT+MF)
+transmit(GET_RESPONSE+[0x1a])
+select(MF)
 @client.disconnect
 
 # close client_io

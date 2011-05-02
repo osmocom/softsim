@@ -1,6 +1,6 @@
 # this is the client part of the SAP
 # it implements the state machine for the client
-require 'common'
+require 'lib/common'
 
 # this is an abstract class
 # TODO :

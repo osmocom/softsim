@@ -1,4 +1,4 @@
-require 'client' # SAP client
+require 'lib/client' # SAP client
 require 'dbus' # libdbus-ruby
 
 # class to connect to BT SAP server using BlueZ over dbus

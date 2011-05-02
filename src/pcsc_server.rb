@@ -1,16 +1,14 @@
 #!/usr/bin/env ruby
-require 'server'
+require 'lib/server'
 require 'socket'
+require 'rubygems'
+require 'smartcard'
 =begin
 need to install
 sudo aptitude install ruby ruby-dev rubygems
 sudo aptitude install libpcsclite1 libpcsclite-dev libruby
 sudo gem install smartcard (http://www.rubygems.org/gems/smartcard)
 =end
-require 'rubygems'
-# smartcard 0.5.1 can not handle T=0 because of a FFI::Enum bug
-# patch existing
-require 'smartcard'
 
 # SAP server using PCSC for the card
 class PCSCServer < Server

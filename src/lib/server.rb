@@ -1,7 +1,7 @@
 # this is the server part of the SAP
 # it implements the state machine for the server
 # this is an abstract class
-require 'common'
+require 'lib/common'
 
 # this is an bastract class
 # TODO (not implemented) :

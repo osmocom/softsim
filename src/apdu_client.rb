@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # This programm will forward APDU from a TCP port to a SAP server
+require 'lib/client'
 require 'socket'
-require 'client'
 
 SAP_HOST = "localhost"
 SAP_PORT = "1337"
