@@ -17,7 +17,7 @@ along with SAP.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-# This programm will forward APDU from a TCP port to a SAP server
+# this programm will forward APDU from an IO to a SAP server
 require 'lib/client'
 require 'socket'
 
