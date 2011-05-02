@@ -140,7 +140,7 @@ class SIMServer < Server
   # select file using the file ID
   # node representing the file is returned
   # nil is return if file does not exist or is unaccessible
-  def select (id)
+  def select(id)
     response = nil
     # get the current directory
     dfs = [0x3f,0x5f,0x7f]
@@ -179,9 +179,3 @@ class SIMServer < Server
   end
 
 end
-
-# demo application, using TCP socket
-socket = TCPServer.new("localhost",1337)
-io = socket.accept
-server = SIMServer.new(io)
-server.start

@@ -18,7 +18,6 @@ along with SAP.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 require 'lib/server'
-require 'socket'
 require 'rubygems'
 require 'smartcard'
 =begin
@@ -109,9 +108,3 @@ class PCSCServer < Server
   end
 
 end
-
-# demo application, using TCP socket
-socket = TCPServer.new("localhost",1337)
-io = socket.accept
-server = PCSCServer.new(io)
-server.start

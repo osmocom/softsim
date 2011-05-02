@@ -69,6 +69,7 @@ VERBOSE = 0
 
 include APDU
 
+# tell APDU methods how to send
 def transmit_apdu(apdu)
   return @client.apdu(apdu)
 end
