@@ -26,7 +26,7 @@ require 'dbus' # libdbus-ruby
 # TODO :
 # - scan only for BTSAP
 # - test if paired device is available before scanning
-class BluetoothClient
+class BluetoothSAPSerial
 
   # bluetooth SAP UUID
   SAP_UUID = "0000112d-0000-1000-8000-00805f9b34fb"
@@ -37,10 +37,10 @@ class BluetoothClient
   # select a device
   def initialize
 
-    @bt_service = BluetoothClient.service()
-    @bt_manager = BluetoothClient.manager(@bt_service)
-    @bt_adapter = BluetoothClient.adapter(@bt_service,@bt_manager)
-    @bt_device_addr = BluetoothClient.device(@bt_service,@bt_adapter)
+    @bt_service = BluetoothSAPSerial.service()
+    @bt_manager = BluetoothSAPSerial.manager(@bt_service)
+    @bt_adapter = BluetoothSAPSerial.adapter(@bt_service,@bt_manager)
+    @bt_device_addr = BluetoothSAPSerial.device(@bt_service,@bt_adapter)
 
   end
 

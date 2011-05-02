@@ -37,7 +37,7 @@ when :tcp
   port = 1337
   io = TCPSocket.open(host,port)
 when :bt
-  require 'bluetooth_client'
+  require 'lib/bluetooth_sap_serial'
   #sudo gem install serialport (http://rubygems.org/gems/serialport)
   require 'rubygems'
   require 'serialport'
