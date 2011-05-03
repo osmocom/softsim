@@ -237,7 +237,7 @@ class SAP
   end
 
   # client : ask for the ATR from SAP server (must be connected)
-  # server : get ATR from SIM card (or SAP result code)
+  # server : get ATR from SIM card, nil if not available
   # return : ATR
   def atr
     raise NotImplementedError

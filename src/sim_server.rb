@@ -55,10 +55,7 @@ class SIMServer < Server
     @response = node.find_first("./header").content.hex2arr
 
     # card ready
-    # ["StatusChange",["Card reset"]]
-    status = create_message("STATUS_IND",[[0x08,[0x01]]])
-    send(status)
-    log("server","connection established. SIM loaded",3)
+    return true
   end
 
   # get ATR

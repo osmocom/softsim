@@ -92,8 +92,18 @@ class Server < SAP
           send(response)
           set_state :idle
           log("server","connection established",3)
-          # connect is responsible to send the status
-          connect()
+          # try to connect until connected
+          until connect() do
+            # ["StatusChange",["Card not accessible"]]
+            status = create_message("STATUS_IND",[[0x08,[0x02]]])
+            send(status)
+            sleep 1
+          end
+          # card ready
+          # ["StatusChange",["Card reset"]]
+          status = create_message("STATUS_IND",[[0x08,[0x01]]])
+          send(status)
+          log("server","card ready",3)
         end
       when "DISCONNECT_REQ"
         raise "msg #{message[:name]} in wrong state #{@state}" unless @state!=:not_connected and @state!=:connection_under_nogiciation
@@ -104,20 +114,18 @@ class Server < SAP
       when "TRANSFER_ATR_REQ"
         raise "msg #{message[:name]} in wrong state #{@state}" unless @state==:idle
         set_state :processing_atr_request
-        # atr should return ATR byte array, or error result code
+        # atr should return ATR byte array, nil if not available
         atr_result = atr
         payload = []
-        if atr_result.kind_of?(Array) then
+        if atr_result then
           log("ATR","#{hex(atr_result)}",1)
           # ["ResultCode",["OK, request processed correctly"]]
           payload << [0x02,[0x00]]
           # ["ATR",atr]
           payload << [0x06,atr_result]
-        elsif atr_result.kind_of?(Integer) then
-          # ["ResultCode",[code from atr]]
-          payload << [0x02,[atr_result]]
         else
-          raise "unexpected answer #{atr_result.class} from atr"
+          # ["ResultCode",["Error, data not available"]]
+          payload << [0x02,[0x06]]
         end
         # send response
         response = create_message("TRANSFER_ATR_RESP",payload)
