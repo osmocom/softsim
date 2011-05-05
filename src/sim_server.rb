@@ -51,7 +51,7 @@ class SIMServer < Server
     
     # select MF
     node = @card.find_first("/sim/file")
-    @selected = node
+    @selected = node # @selected must always be a file node
     @response = node.find_first("./header").content.hex2arr
 
     # card ready
@@ -124,6 +124,44 @@ class SIMServer < Server
         data = @response
         sw = [0x90,0x00]
       end
+    when 0xf2 # STATUS
+      # get current directory
+      current_directory = pwd
+      status = current_directory.find_first("./header").content.hex2arr
+      # verify the apdu
+      if request[2,2]!=[0x00,0x00] then
+        # incorrect parameter P1 or P2
+        sw = [0x6b,0x00]
+      elsif request[4]!=status.length then
+        # incorrect parameter P3
+        sw = [0x67,status.length]
+      else
+        # return the status
+        data = status
+        sw = [0x90,0x00]
+      end
+    when 0xb0 # READ BINARY
+      # is an ef selected ?
+      type = selected_type
+      if type[:type]!="EF" then
+        # no EF selected
+        sw = [0x94,0x00]
+      elsif type[:structure]!="transparent" then
+        # file is inconsitent with the command
+        sw = [0x94,0x08]
+      else
+        body = @selected.find_first("./body").content.hex2arr
+        offset = (request[2]<<8)+request[3]
+        length = request[4]
+        if offset>=body.length or offset+length>body.length then
+          # out of range (invalid address)
+          sw = [0x94,0x02]
+        else
+          # return the data
+          data = body[offset,length]
+          sw = [0x90,0x00]
+        end
+      end
     else # unknown instruction byte
       sw = [0x6d,0x00]
     end
@@ -138,16 +176,10 @@ class SIMServer < Server
   # node representing the file is returned
   # nil is return if file does not exist or is unaccessible
   def select(id)
-    response = nil
-    # get the current directory
+  
+    # get current directory
+    current_directory = pwd
     dfs = [0x3f,0x5f,0x7f]
-    if dfs.include? @selected["id"][0,2].to_i(16) then
-      # selected of a DF
-      current_directory = @selected
-    else
-      # selected is an ED, DF is parent
-      current_directory = @selected.find_first("..")
-    end
       
     # find file
     if result=current_directory.find_first("./file[@id='#{id.to_hex}']") then
@@ -173,6 +205,60 @@ class SIMServer < Server
     @selected = response if response
     
     return response
+  end
+  
+  # get current directory node
+  def pwd
+    # get the current directory
+    dfs = [0x3f,0x5f,0x7f]
+    if dfs.include? @selected["id"][0,2].to_i(16) then
+      # selected of a DF
+      current_directory = @selected
+    else
+      # selected is an ED, DF is parent
+      current_directory = @selected.find_first("..")
+    end
+    
+    return current_directory
+  end
+  
+  # get type of selected file, and structure if EF
+  def selected_type
+    
+    to_return = {}
+    header = @selected.find_first("./header").content.hex2arr
+    # file type
+    type = case header[6]
+    when 0
+      "RFU"
+    when 1
+      "MF"
+    when 2
+      "DF"
+    when 4
+      "EF"
+    else
+      "unknown"
+    end
+    to_return[:type] = type
+
+    # read EF
+    if header[6]==0x04 then
+      # structure
+      structure = case header[13]
+      when 0
+        "transparent"
+      when 1
+        "linear fixed"
+      when 3
+        "cyclic"
+      else
+        "unknown"
+      end
+      to_return[:structure] = structure
+    end
+    
+    return to_return
   end
 
 end
