@@ -94,11 +94,11 @@ class SIMServer < Server
 		    # file selected, response awaiting
 		    @response = node.find_first("./header").content.hex2arr
 		    sw = [0x9f,@response.length]
-            log("APDU select","file selected : #{file_id.to_hex_disp}",3)
+        log("APDU select","file selected : #{file_id.to_hex_disp}",3)
 		  else
 		    # out of range (invalid address)
 		    sw = [0x94,0x02]
-            log("APDU select","file not found/accessible : #{file_id.to_hex_disp}",3)
+        log("APDU select","file not found/accessible : #{file_id.to_hex_disp}",3)
 		  end
 		else
 		  # out of range (invalid address)
@@ -124,8 +124,7 @@ class SIMServer < Server
       end
     when 0xf2 # STATUS
       # get current directory
-      current_directory = pwd
-      status = current_directory.find_first("./header").content.hex2arr
+      status = @pwd.find_first("./header").content.hex2arr
       # verify the apdu
       if request[2,2]!=[0x00,0x00] then
         # incorrect parameter P1 or P2
@@ -160,6 +159,30 @@ class SIMServer < Server
           sw = [0x90,0x00]
         end
       end
+    when 0x88 # RUN GSM ALGORITHM
+      # verify the apdu
+      if request[2,2]!=[0x00,0x00] then
+        # incorrect parameter P1 or P2
+        sw = [0x6b,0x00]
+      elsif request[4]!=0x10 then
+        # incorrect parameter P3
+        sw = [0x67,0x00]
+      elsif ![file_info(@pwd)[:id],file_info(@pwd.find_first(".."))[:id]].include? [0x7F,0x20] then
+        # not under DF_GSM, file is inconsistent with the command
+        sw = [0x94,0x08]
+      else
+        # return the SRES/Kc
+        # do I have it ?
+        tuple = @card.find_first("/sim/a38/tuple[@rand='#{request[5,16].to_hex}']")
+        if tuple then
+          @response = tuple["sres"].hex2arr+tuple["kc"].hex2arr
+          sw = [0x9f,@response.length]
+        else
+          # memory problem
+          sw = [0x92,0x40]
+        end
+      end
+    
     else # unknown instruction byte
       sw = [0x6d,0x00]
     end
