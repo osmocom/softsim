@@ -108,6 +108,7 @@ class Server < SAP
       when "DISCONNECT_REQ"
         raise "msg #{message[:name]} in wrong state #{@state}" unless @state!=:not_connected and @state!=:connection_under_nogiciation
         log("server","client disconneting",3)
+        disconnect()
         response = create_message("DISCONNECT_RESP")
         send(response)
         set_state :not_connected

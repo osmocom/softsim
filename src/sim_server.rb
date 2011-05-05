@@ -42,7 +42,7 @@ class SIMServer < Server
       doc = XML::Parser.string(xml)
       @card = doc.parse
     rescue
-      puts "can't read #{@xml_path}"
+      log("connect","can't read #{@xml_path}",3)
       status = create_message("STATUS_IND",[[0x08,[0x02]]])
       send(status)
       sleep 1
@@ -54,6 +54,11 @@ class SIMServer < Server
     
     # card ready
     return true
+  end
+  
+  def disconnect
+    @card.save(@xml_path)
+    log("disconnect","save SIM in #{@xml_path}",3)
   end
 
   # get ATR
@@ -156,6 +161,28 @@ class SIMServer < Server
         else
           # return the data
           data = body[offset,length]
+          sw = [0x90,0x00]
+        end
+      end
+    when 0xd6 # UPDATE BINARY
+      # is an transparent ef selected ?
+      type = file_info
+      if type[:type]!="EF" then
+        # no EF selected
+        sw = [0x94,0x00]
+      elsif type[:structure]!="transparent" then
+        # file is inconsitent with the command
+        sw = [0x94,0x08]
+      else
+        body = @selected.find_first("./body").content.hex2arr
+        offset = (request[2]<<8)+request[3]
+        length = request[4]
+        if offset>=body.length or offset+length>body.length then
+          # out of range (invalid address)
+          sw = [0x94,0x02]
+        else
+          # write the data
+          body[offset,length] = request[5,length]
           sw = [0x90,0x00]
         end
       end
