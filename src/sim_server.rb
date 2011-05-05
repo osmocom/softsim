@@ -50,10 +50,8 @@ class SIMServer < Server
     end
     
     # select MF
-    node = @card.find_first("/sim/file")
-    @selected = node # @selected must always be a file node
-    @response = node.find_first("./header").content.hex2arr
-
+    select([0x3f,0x00])
+    
     # card ready
     return true
   end
@@ -142,7 +140,7 @@ class SIMServer < Server
       end
     when 0xb0 # READ BINARY
       # is an ef selected ?
-      type = selected_type
+      type = file_info
       if type[:type]!="EF" then
         # no EF selected
         sw = [0x94,0x00]
@@ -176,57 +174,51 @@ class SIMServer < Server
   # node representing the file is returned
   # nil is return if file does not exist or is unaccessible
   def select(id)
-  
-    # get current directory
-    current_directory = pwd
-    dfs = [0x3f,0x5f,0x7f]
-      
+
     # find file
-    if result=current_directory.find_first("./file[@id='#{id.to_hex}']") then
+    if id==[0x3f,0x00] then
+      # the MF is always selectable
+      response = @card.find_first("/sim/file[@id='#{id.to_hex}']")
+    elsif result=@pwd.find_first("./file[@id='#{id.to_hex}']") then
       # any file which is an immediate child of the current directory
       response = result
-    elsif dfs.include? current_directory["id"][0,2].to_i(16) and result=current_directory.find_first("../file[@id='#{id.to_hex}']") then
+    elsif file_info(@pwd)[:type]=="DF" and result=@pwd.find_first("../file[@id='#{id.to_hex}']") then
       # any DF which is an immediate child of the parent of the current DF
       response = result
-    elsif result=current_directory.find_first("..") and result["id"]==id.to_hex then
+    elsif result=@pwd.find_first("..") and file_info(result)[:id]==id then
       # the parent of the current directory
       response = result
-    elsif current_directory["id"]==id.to_hex then
+    elsif file_info(@pwd)[:id]==id then
       # the current DF
-      response = current_directory
-    elsif id==[0x3f,0x00] then
-      # the MF
-      response = @card.find_first("/sim/file[@id='3f00']")
+      response = @pwd
     else
       # file not found
       response = nil
     end
+    
     # remember new selected file
     @selected = response if response
+    # get current directory
+    if ["MF","DF"].include? file_info(@selected)[:type] then
+      # selected of a DF
+      @pwd = @selected
+    else
+      # selected is an ED, DF is parent
+      @pwd = @selected.find_first("..")
+    end
     
     return response
   end
   
-  # get current directory node
-  def pwd
-    # get the current directory
-    dfs = [0x3f,0x5f,0x7f]
-    if dfs.include? @selected["id"][0,2].to_i(16) then
-      # selected of a DF
-      current_directory = @selected
-    else
-      # selected is an ED, DF is parent
-      current_directory = @selected.find_first("..")
-    end
-    
-    return current_directory
-  end
-  
   # get type of selected file, and structure if EF
-  def selected_type
+  def file_info(file=@selected)
     
     to_return = {}
     header = @selected.find_first("./header").content.hex2arr
+    
+    # file id
+    to_return[:id] = [header[4],header[5]]
+    
     # file type
     type = case header[6]
     when 0
@@ -242,8 +234,8 @@ class SIMServer < Server
     end
     to_return[:type] = type
 
-    # read EF
-    if header[6]==0x04 then
+    # EF struture
+    if type=="EF" then
       # structure
       structure = case header[13]
       when 0
