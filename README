@@ -1,49 +1,59 @@
-SAP is a ruby implementation of the BTSAP (Bluetooth SIM Access Profile) spec.
+Presentation :
 
-client and server share common contsants, functions, pricipiles
+softSIM is a collection of tool to play with SIM.
+I mainly relies on SAP, as abstraction layer to access SIM.
+SAP is a implementation of the BTSAP (Bluetooth SIM Access Profile) spec.
+
+Overview :
+
+client and server share common contsants, functions, message queue handling.
 this common part is defined in common.rb
-client.rb is a child of common.rb, it implements the client part of SAP
-server.rb is a child of common.rb, it implements the server part of SAP
-client.rb and server.rb do not work on there own, but are "interfaces"
+client.rb is a child of common.rb, it implements the client state machine of SAP
+You mainly have to provide an IO to connect to the server.
+You can then connect, get the ATR, send some APDU, and disconnect.
+server.rb is a child of common.rb, it implements the server state machine of SAP
+server.rb does not work on it's own, but is an abstract class (it has abstract methods).
+You have to implement the connect,disconnect,atr,apdu functions.
+You also have to provide an IO for the server to listen to.
+apdu.rb contains general method to abstract SIM commands.
 
-common.rb :
-- is contains the contanst for SAP, the method to create and parse the message,
-methods to get and send messages, and the state machine call
-- the verbosity is definied in this class in VERBOSE
+Tools & Demo :
 
-client.rb :
-- it implements the client side of the state machine
-- a IO to the server has to be provided
-- it provides the main functions : connect,atr,apdu,disconnect
-
-server.rb :
-- it implements the server part of the state machine
-- a IO to accept clients has to be provided
-- the main functions have to be implemented to
-
-bluetooth_client.rb :
-- it searches for bluetooth SAP servers and connects to it
-- a path to the serial port is provided
-- it used BlueZ over dbus (see file head for details)
+bluetooth_sap_serial searches for bluetooth SAP servers, connects to it,
+and return the serial port path (bluez and dbus are used)
 
 demo_client :
-- it's purpose it to test the client implementation (just the basics)
-- choose between :bt and :tcp if the head of the file
-- if :tcp is chosen, it will connect to a SAP server using a network socket
-- if :bt is chosen, it will connect to a SAP server using bluetooth
-(using bluetooth_client.rb)
-- the demo application will only connect to the server, get the ATR,
-send a single APDU, and disconnect
+- it's purpose is to test the client implementation (just the basics)
+- use the CLI to indicate the server
+- it executes some common commands
 
 demo_server.rb :
-- nothing implemented yet
+- it's purpose is to start the server implementations (sim,pcsc)
+- use the CLI to configure it
 
 pcsc_server.rb :
-- this is a server implementation that uses a classic smart card reader to
-connect to the SIM
-- it uses a network port to listen for clients
-- the gem smartcard is used (see head for details)
+- this is a server implementation that uses a classic smart card reader
+to connect to the SIM (smartcard gem used)
 
-STATE :
+sim_server.rb :
+- this provides a softSIM (software SIM)
+- it is SIMOS
+- the SIM files have to be provided in a xml file
+
+Requirements :
+- ruby 1.8.7
+- rubygems and ruby-dev to build some gems
+- libdbus-ruby (for bluetooth_sap_serial)
+- serialport gem (to use bluetooth_sap_serial, http://rubygems.org/gems/serialport)
+- smartcard gem (for pcsc_server, http://www.rubygems.org/gems/smartcard, requires libpcsclite1 libpcsclite-dev libruby)
+- libxml-ruby (for sim server)
+
+TODO :
+
+SAP :
 - it does not implement the functions for the proactive SIM : power_on/off,
 reset , ...
+
+sim_server :
+- not all the commands are implemented (even the PIN verification)
+- implement COMP128v1
