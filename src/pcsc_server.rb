@@ -82,6 +82,7 @@ class PCSCServer < Server
     return true
   end
   
+  # release card and context
   def disconnect
     @card.disconnect
     @context.release
