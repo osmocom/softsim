@@ -80,7 +80,7 @@ while arg=ARGV.shift do
   when "--socket","-s"
     param = ARGV.shift
     @socket = param if param
-  when "--tcp","-t"
+  when "--port","-p"
     param = ARGV.shift.to_i
     @tcp = param if param
   when "--host","-l"
