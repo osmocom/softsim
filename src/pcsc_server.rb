@@ -17,7 +17,7 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-require 'lib/server'
+require 'sap/server'
 require 'rubygems'
 require 'smartcard'
 =begin

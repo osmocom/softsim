@@ -18,7 +18,7 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this programm will forward APDU from an IO to a SAP server
-require 'lib/client'
+require 'sap/client'
 require 'socket'
 
 SAP_HOST = "localhost"

@@ -17,7 +17,6 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-require 'lib/client' # SAP client
 require 'dbus' # libdbus-ruby
 =begin
 to monitor bluetooth traffic

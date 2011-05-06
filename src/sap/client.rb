@@ -18,7 +18,7 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this is the client part of the SAP
 # it implements the state machine for the client
-require 'lib/common'
+require 'sap/common'
 
 # this is an abstract class
 # TODO :
