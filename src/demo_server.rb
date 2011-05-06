@@ -19,36 +19,97 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this program is there to start a server
 
-# the io the server should use (:tcp,:unix)
-io_type = :tcp
-# the server to use (:pcsc,:sim)
-server_type = :pcsc
+#=============
+#== default ==
+#=============
+
+# the server to use (pcsc,sim)
+@type = "pcsc"
+# which IO to use (tcp,unix)
+@socket = "tcp"
+# tcp port
+@port = 1337
+# unix socket
+@unix = "/tmp/sap.socket"
+# sim file
+@file = "sim.xml"
 # the verbosity (from common)
 $verbosity = 1
 
-# create the IO
-case io_type
-when :tcp
-  require 'socket'
-  TCP_HOST = "localhost"
-  TCP_PORT = "1337"
-  socket = TCPServer.new(TCP_HOST,TCP_PORT)
-when :unix
-  require 'socket'
-  UNIX = "/tmp/sap_server.socket"
-  socket = UNIXServer.new(APDU_SOCKET)
-else
-  raise "unkown IO type"
+#=============
+#== methods ==
+#=============
+
+# show help
+def print_help
+  puts "demo_server.rb [options]"
+  puts ""
+  puts "demonstration SAP server, using available implementations"
+  puts ""
+  puts "options :"
+  puts " --help,-h\t\tprint this help"
+  puts " --type,-t type\tserver type : pcsc,sim (default #{@type})"
+  puts " --socket,-s type\tsocket type : tcp,unix,bt (default #{@socket})"
+  puts " --port,-p port\t\ttcp listeing port (default #{@port})"
+  puts " --unix,-u file\t\tunix socket (default #{@unix})"
+  puts " --file,-f file\t\tfile for sim type (default #{@file})"
+  puts " --verbosity,-v\t\tdebug verbosity 0..5 (default #{$verbosity})"
 end
 
+#==========
+#== main ==
+#==========
+
+# parse CLI arguments
+while arg=ARGV.shift do
+  
+  case arg
+  when "--help","-h"
+    print_help
+    exit 0
+  when "--type","-t"
+    param = ARGV.shift
+    @type = param if param
+  when "--socket","-s"
+    param = ARGV.shift
+    @host = param if param
+  when "--port","-p"
+    param = ARGV.shift.to_i
+    @port = param if param
+  when "--unix","-u"
+    param = ARGV.shift
+    @unix = param if param
+  when "--file","-f"
+    param = ARGV.shift
+    @file = param if param
+  when "--verbosity","-v"
+    param = ARGV.shift.to_i
+    $verbosity = param if param
+  else
+    puts "unknown argument #{arg}"
+    exit 0
+  end
+end
+
+# create IO
+case @socket
+when "tcp"
+  require 'socket'
+  socket = TCPServer.new("0.0.0.0",@port)
+when "unix"
+  require 'socket'
+  socket = UNIXServer.new(@unix)
+else
+  raise "please defined which socket to use"
+end
 # wait for a client to connect
 io = socket.accept
 
-case server_type
-when :pcsc
+case @type
+when "pcsc"
   require 'pcsc_server'
   server = PCSCServer.new(io)
-when :sim
+when "sim"
   require 'sim_server'
   server = SIMServer.new(io)
 else
