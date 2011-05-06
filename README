@@ -40,6 +40,12 @@ sim_server.rb :
 - it is SIMOS
 - the SIM files have to be provided in a xml file
 
+apdu_forward :
+- it's just a APDU to SAP wrapped
+- it take APDu from a IO, acts as a SAP client, connects to a SAP server,
+gets the response, return the response APDU
+- it has been used do use external SIM (or softSIM) with osmocomBB
+
 Requirements :
 - ruby 1.8.7
 - rubygems and ruby-dev to build some gems
