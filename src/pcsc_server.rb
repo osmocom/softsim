@@ -81,6 +81,11 @@ class PCSCServer < Server
 
     return true
   end
+  
+  def disconnect
+    @card.disconnect
+    @context.release
+  end
 
   # get ATR
   def atr
