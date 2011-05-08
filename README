@@ -1,7 +1,7 @@
 Presentation :
 
-softSIM is a collection of tool to play with SIM.
-I mainly relies on SAP, as abstraction layer to access SIM.
+softSIM is a collection of tools to play with SIM.
+It mainly relies on SAP, as abstraction layer to access SIM.
 SAP is a implementation of the BTSAP (Bluetooth SIM Access Profile) spec.
 
 Overview :
