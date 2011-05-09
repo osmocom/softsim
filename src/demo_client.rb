@@ -20,11 +20,14 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 # this programm will create a client which can be used to test servers
 require 'sap/client'
 require 'lib/apdu'
+require 'info_client'
 
 #=============
 #== default ==
 #=============
 
+# client use (demo,info)
+@type = "demo"
 # which IO to use (tcp,unix,bt)
 @socket = "tcp"
 # tcp port
@@ -58,8 +61,9 @@ def print_help
   puts ""
   puts "options :"
   puts " --help,-h\t\tprint this help"
+  puts " --type,-t client\tclient type : demo,info (default #{@type})"
   puts " --socket,-s type\tsocket type : tcp,unix,bt (default #{@socket})"
-  puts " --tcp,-t port\t\ttcp port (default #{@port})"
+  puts " --tcp,-p port\t\ttcp port (default #{@port})"
   puts " --host,-l host\t\ttcp host (default #{@host})"
   puts " --unix,-u file\t\tunix socket (default #{@unix})"
   puts " --bluetooth,-s rfcomm\tbluetooth rfcomm serial port (default #{@bt ? @bt : 'self discovery'})"
@@ -77,6 +81,9 @@ while arg=ARGV.shift do
   when "--help","-h"
     print_help
     exit 0
+  when "--type","-t"
+    param = ARGV.shift
+    @type = param if param
   when "--socket","-s"
     param = ARGV.shift
     @socket = param if param
@@ -125,38 +132,47 @@ else
   raise "please defined which socket to use"
 end
 
-# create client
-@client = Client.new(io)
-@client.start
-@client.connect
+case @type
+when "demo"
+  # create client
+  @client = Client.new(io)
+  @client.start
+  @client.connect
 
-# get ATR
-atr = @client.atr
-puts atr ? "ATR : #{atr.to_hex_disp}" :  "could not get ATR"
+  # get ATR
+  atr = @client.atr
+  puts atr ? "ATR : #{atr.to_hex_disp}" :  "could not get ATR"
 
-# get IMSI
-imsi = read_ef([MF,DF_GSM,EF_IMSI])
-# byte 1 is the length of the IMSI
-imsi_length = imsi[0]
-imsi = imsi[1,imsi_length]
-# first nibble is for parity check (not done)
-imsi = imsi.nibble_str[1..-1]
-puts "IMSI : "+imsi
+  # get IMSI
+  imsi = read_ef([MF,DF_GSM,EF_IMSI])
+  # byte 1 is the length of the IMSI
+  imsi_length = imsi[0]
+  imsi = imsi[1,imsi_length]
+  # first nibble is for parity check (not done)
+  imsi = imsi.nibble_str[1..-1]
+  puts "IMSI : "+imsi
 
-# run A38 algo
-# the rands
-rands = []
-4.times do |i|
-  rands << [(i<<4)+i]*16
+  # run A38 algo
+  # the rands
+  rands = []
+  4.times do |i|
+    rands << [(i<<4)+i]*16
+  end
+  # the results
+  puts "some KCs (RAND SRES Kc) :"
+  rands.each do |r|
+    response = a38(r)
+    puts "  - #{r.to_hex_disp.gsub(' ','')} #{response[0,4].to_hex_disp.gsub(' ','')} #{response[4..-1].to_hex_disp.gsub(' ','')}"
+  end
+
+  @client.disconnect
+when "info"
+  @client = Info.new(io)
+  @client.display
+  @client.close
+else
+  raise "please defined which type to use"
 end
-# the results
-puts "some KCs (RAND SRES Kc) :"
-rands.each do |r|
-  response = a38(r)
-  puts "  - #{r.to_hex_disp.gsub(' ','')} #{response[0,4].to_hex_disp.gsub(' ','')} #{response[4..-1].to_hex_disp.gsub(' ','')}"
-end
-
-@client.disconnect
 
 # close client_io
 io.close
