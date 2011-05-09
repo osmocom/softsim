@@ -39,7 +39,7 @@ require 'info_client'
 # bluetooth rfcomm serial port
 @bt = nil
 # the verbosity (from common)
-$verbosity = 1
+$verbosity = 0
 
 #=============
 #== methods ==
