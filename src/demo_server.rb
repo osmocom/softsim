@@ -72,7 +72,7 @@ while arg=ARGV.shift do
     @type = param if param
   when "--socket","-s"
     param = ARGV.shift
-    @host = param if param
+    @socket = param if param
   when "--port","-p"
     param = ARGV.shift.to_i
     @port = param if param
