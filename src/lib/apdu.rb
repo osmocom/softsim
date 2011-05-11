@@ -104,6 +104,10 @@ module APDU
   CHV1 = [CLASS,0x20,0x00,0x01,0x08]
   A38 = [CLASS,0x88,0x00,0x00,0x10]
 
+  # file hierarchie
+  DF_LEVELS = [0x3f,0x7f,0x5f]
+  EF_LEVELS = [nil,0x2f,0x6f,0x4f]
+  
   # file address (TS 51.011 10.7, page 105)
   MF = [0x3F,0x00]
     EF_ICCID = [0x2F,0xE2]
@@ -232,6 +236,125 @@ module APDU
     response, sw1, sw2 = transmit(GET_RESPONSE+[sw2])
 
     return response
+  end
+  
+  # decode data included in the select response
+  # based on 3GPP TS 11.11 9.2.1
+  def select_decode(response)
+
+    puts "decoding select response : #{response.to_hex_disp}"
+
+    # define type before interpreting
+    type = case response[6]
+    when 0
+      "RFU"
+    when 1
+      "MF"
+    when 2
+      "DF"
+    when 4
+      "EF"
+    else
+      "unknown"
+    end
+
+    if type=="MF" or type=="DF" then
+      puts "  - RFU : #{response[0,2].to_hex_disp}"
+      puts "  - unallocated memory : #{(response[2]<<8)+response[3]} Bytes (#{response[2,2].to_hex_disp})"
+      puts "  - file ID : #{FILE_ID[(response[4]<<8)+response[5]]} (#{response[4,2].to_hex_disp})"
+      puts "  - type of file : #{type} (#{response[6,1].to_hex_disp})"
+      puts "  - RFU : #{response[7,5].to_hex_disp}"
+      puts "  - GSM data length : #{response[12]} Bytes (#{response[12,1].to_hex_disp})"
+      charac = "  - characteristics : "
+      charac += "clock stop "
+      clock_stop = (response[13]&0x01==1)
+      charac += clock_stop ? "allowed" : "not allowed"
+      charac += ", "
+      charac += case (response[13]>>2)&0x03
+      when 0
+        clock_stop ? "no prefered level" : ""
+      when 1
+        clock_stop ? "high level preferred" : "unless high level"
+      when 2
+        clock_stop ? "low level preferred" : "unless low level"
+      end
+      charac += ", "
+      charac += "AUTH/ENVELOPE freq >"
+      charac += (response[13]>>1)&0x01 ? "13/4" : "13/8"
+      charac += "MHz"
+      charac += ", "
+      charac += "CHV1 "
+      charac += (response[13]>>7)&0x01==0 ? "enabled" : "disabled"
+      charac += " (#{response[13,1].to_hex_disp})"
+      puts charac
+      puts "  - # child DFs : #{response[14]} (#{response[14,1].to_hex_disp})"
+      puts "  - # child EFs : #{response[15]} (#{response[15,1].to_hex_disp})"
+      puts "  - # codes : #{response[16]} (#{response[16,1].to_hex_disp})"
+      puts "  - RFU : #{response[17,1].to_hex_disp}"
+      codes = ["CHV1","unblock CHV1","CVH2","unblock CHV2"]
+      codes.each_index do |i|
+        puts "  - #{codes[i]} : #{(response[18+i]>>7)&0x01==0 ? 'not initialised' : 'initialised'}, #{response[18+i]&0x0f} tries remaining (#{response[18+i,1].to_hex_disp})"
+      end
+      puts "  - RFU : #{response[22,1].to_hex_disp}" if response.length>22
+      puts "  - administrative : #{response[23..-1].to_hex_disp}" if response.length>23
+    elsif type=="EF" then
+      structure = case response[13]
+      when 0
+        "transparent"
+      when 1
+        "linear fixed"
+      when 3
+        "cyclic"
+      else
+        "unknown"
+      end
+      puts "  - RFU : #{response[0,2].to_hex_disp}"
+      puts "  - file size : #{(response[2]<<8)+response[3]} Bytes (#{response[2,2].to_hex_disp})"
+      puts "  - file ID : #{FILE_ID[(response[4]<<8)+response[5]]} (#{response[4,2].to_hex_disp})"
+      puts "  - type of file : #{type} (#{response[6,1].to_hex_disp})"
+      if structure=="cyclic" then
+        if (response[7]>>6)&0x01 then
+          puts "  - INCREASE command allowed"
+        else
+          puts "  - INCREASE command not allowed"
+        end
+      else
+        puts "  - RFU : #{response[7,1].to_hex_disp}"
+      end
+      puts "  - Access Conditions :"
+      nibble_index = 0
+      ["READ & SEEK","UPDATE","INCREASE","RFU","REHABILITATE","INVALIDATE"].each do |access|
+        nibble = ((response[8+nibble_index/2])>>(4*(1-(nibble_index%2))))&0x0f
+        condition = case nibble
+        when 0
+          "ALW"
+        when 1
+          "CHV1"
+        when 2
+          "CHV2"
+        when 3
+          "RFU"
+        when 0xf
+          "NEVER"
+        else
+          "ADM"
+        end
+        puts "    #{access} : #{condition} (#{[nibble].to_hex_disp})"
+        nibble_index += 1
+      end
+      # file status
+      status = "  - file status : "
+      status += response[11]&0x01==0 ? "invalidated" : "not invalidated"
+      status += ", "
+      status += (response[11]>>2)&0x01==0 ? "not readable or updatable when invalidated" : "readable when updatable when invalidated"
+      puts status
+      puts "  - data length : #{response[12]} Bytes (#{response[12,1].to_hex_disp})"
+      puts "  - structure : #{structure}"
+      puts "  - record length : #{response[14]} Bytes (#{response[14,1].to_hex_disp})" if response.length>14
+      puts "  - RFU : #{response[15..-1].to_hex_disp}" if response.length>15
+    else
+      puts "  unknown file type"
+    end
   end
 
   # get the status (current directory)
