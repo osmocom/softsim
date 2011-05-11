@@ -110,7 +110,7 @@ when "pcsc"
   require 'pcsc_server'
   server = PCSCServer.new(io)
 when "sim"
-  require 'sim_server'
+  require 'simos_server'
   server = SIMServer.new(io)
 else
   raise "unkown server type"
