@@ -21,12 +21,13 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 require 'sap/client'
 require 'lib/apdu'
 require 'info_client'
+require 'copy_client'
 
 #=============
 #== default ==
 #=============
 
-# client use (demo,info)
+# client use (demo,info,copy)
 @type = "demo"
 # which IO to use (tcp,unix,bt)
 @socket = "tcp"
@@ -36,6 +37,8 @@ require 'info_client'
 @host = "localhost"
 # unix socket
 @unix = "/tmp/sap.socket"
+# file were to save the copy
+@file = "sim.xml"
 # bluetooth rfcomm serial port
 @bt = nil
 # the verbosity (from common)
@@ -61,11 +64,12 @@ def print_help
   puts ""
   puts "options :"
   puts " --help,-h\t\tprint this help"
-  puts " --type,-t client\tclient type : demo,info (default #{@type})"
+  puts " --type,-t client\tclient type : demo,info,copy (default #{@type})"
   puts " --socket,-s type\tsocket type : tcp,unix,bt (default #{@socket})"
   puts " --tcp,-p port\t\ttcp port (default #{@port})"
   puts " --host,-l host\t\ttcp host (default #{@host})"
   puts " --unix,-u file\t\tunix socket (default #{@unix})"
+  puts " --file,-f path\t\tfile where to save the sim copy (default #{@file})"
   puts " --bluetooth,-s rfcomm\tbluetooth rfcomm serial port (default #{@bt ? @bt : 'self discovery'})"
   puts " --verbosity,-v\t\tdebug verbosity 0..5 (default #{$verbosity})"
 end
@@ -96,6 +100,9 @@ while arg=ARGV.shift do
   when "--unix","-u"
     param = ARGV.shift
     @unix = param if param
+  when "--file","-f"
+    param = ARGV.shift
+    @file = param if param
   when "--bluetooth","-s"
     param = ARGV.shift
     @bt = param if param
@@ -169,6 +176,10 @@ when "demo"
 when "info"
   @client = Info.new(io)
   @client.display
+  @client.close
+when "copy"
+  @client = Copy.new(io)
+  @client.copy(@file)
   @client.close
 else
   raise "please defined which type to use"
