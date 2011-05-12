@@ -157,7 +157,6 @@ class Client < SAP
         raise "can not connect. required state : not_connected, current state : #{@state}"
         return false
       end
-      sleep @wait_time
     end
     # wait for the sim to be ready
     until @sim_ok do
