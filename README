@@ -25,17 +25,40 @@ and return the serial port path (bluez and dbus are used)
 demo_client :
 - it's purpose is to test the client implementation (just the basics)
 - use the CLI to indicate the server
-- it executes some common commands
+- it can use different client (demo,info,copy)
+  - demo : only executes some very common APDUs
+  - info : displays information stored in the SIM (see info_client.rb)
+  - copy : copies the files from the SIM into a XML file (see copy_client.rb)
+  
+info_client.rb :
+- it read and displayed information stored on the SIM :
+  - ICCID
+  - IMSI
+  - MSISDN
+  - OFM
+  - services provided
+  - some Kc
+  - ...
+- it's easy to decode more info
+
+copy_client.rb :
+- it copies all the files (MF/DF/EF) from the SIM into a XML file
+- it's not a cloned, as Ki can not be copied (used for the autentication
+and encryption)
+- some authentication triplets are also extracted
+- the CHV1(PIN) is also saved
+- only the body of the files with access condition ALWAYS and CHV1 can
+be copied. otherwise only the header is saved.
 
 demo_server.rb :
-- it's purpose is to start the server implementations (sim,pcsc)
+- it's purpose is to start the server implementations (simos,pcsc)
 - use the CLI to configure it
 
 pcsc_server.rb :
 - this is a server implementation that uses a classic smart card reader
 to connect to the SIM (smartcard gem used)
 
-sim_server.rb :
+simos_server.rb :
 - this provides a softSIM (software SIM)
 - it is SIMOS
 - the SIM files have to be provided in a xml file
