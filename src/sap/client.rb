@@ -90,7 +90,7 @@ class Client < SAP
       # verify response
       if connection_status==0x00 then
         # OK, Server can fulfill requirements
-        log("client","connected",3)
+        log("client","connected to server",3)
         set_state :idle
       elsif connection_status==0x02 and message[:payload].size==2 then
         # Error, Server does not support maximum message size
@@ -107,7 +107,7 @@ class Client < SAP
       @end=true
     when "STATUS_IND"
       status = message[:payload][0][:value][0]
-      log("client","new status : #{STATUS_CHANGE[status]}",3)
+      log("client","new card status : #{STATUS_CHANGE[status]}",3)
       if status==0x01 then
         # card reset
         @sim_ok = true
@@ -153,7 +153,7 @@ class Client < SAP
         connect = create_message("CONNECT_REQ",payload)
         send(connect)
         set_state :connection_under_negociation
-      elsif @state!=:connection_under_negociation
+      elsif @state!=:connection_under_negociation and @state!=:idle
         raise "can not connect. required state : not_connected, current state : #{@state}"
         return false
       end
