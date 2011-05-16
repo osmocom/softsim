@@ -31,54 +31,74 @@ sudo gem install smartcard (http://www.rubygems.org/gems/smartcard)
 class PCSCServer < Server
 
   # provide the io to listen to
-  # TODO : choose which reader to use
   def initialize(io)
     super(io)
-    
+  end
+  
+  # get the reader and the card
+  # return if connection to card succeeded
+  def select_card
+  
     # get PCSC context
     begin
       @context = Smartcard::PCSC::Context.new
     rescue Smartcard::PCSC::Exception => e
       puts "PCSC not available. please start PCSC"
-      sleep 1
-      retry
+      return false
     end
-      
+    
     # get all readers
     begin
       readers = @context.readers
     rescue Smartcard::PCSC::Exception => e
       puts "no reader available. please connect a card reader"
-      sleep 1
-      retry
+      return false
     end
     
     # one reader required
-    while readers.size==0 do
+    if readers.size==0 then
       puts "no reader available. connect a reader"
-      sleep 1
-      readers = @context.readers
+      return false
+      # select reader
+    elsif readers.size==1 then
+      # use the first reader
+      reader = readers.first
+    elsif @reader_id
+      # reader already selected
+    else
+      # select reader
+      puts "readers :"
+      readers.each_index do |i|
+        puts "#{i}) #{readers[i]}"
+      end
+      reader = nil
+      until reader do
+        print "select reader [0] : "
+        @reader_id = gets.chomp.to_i
+        reader = readers[@reader_id]
+      end
+    end
+    puts "using reader : #{reader}"
+    
+    # connect to the card
+    verb = true
+    begin
+      @card = Smartcard::PCSC::Card.new(@context,reader,:exclusive,:t0)
+    rescue Smartcard::PCSC::Exception
+      puts "no card inside. insert smart card"
+      return false
     end
     
-    # use the first reader
-    @reader = readers.first
-    puts "using reader : #{@reader}"
-    
+    puts "connected to card"
+    return true
   end
 
   # connect to card
   def connect
 
-    # connect to the card
-    begin
-      @card = Smartcard::PCSC::Card.new(@context,@reader,:exclusive,:t0)
-    rescue Smartcard::PCSC::Exception => e
-      # wait for a card
-      puts "no card available. insert card"
-      sleep 1
-      retry
-    end
-
+    # connect to card
+    sleep 1 until select_card
+    
     return true
   end
   
@@ -97,7 +117,19 @@ class PCSCServer < Server
   # send APDU and get response
   def apdu(request)
     raise "connect to card to send APDU" unless @card
-    response = @card.transmit(request.pack('C*')).unpack("C*")
+    begin
+      response = @card.transmit(request.pack('C*')).unpack("C*")
+    rescue Smartcard::PCSC::Exception => e
+      tries = 0 unless tries
+      tries += 1
+      if tries <= 3 then
+        puts "PCSC bug (try #{tries})"
+        sleep 5
+        retry
+      else
+        raise e if tries>=3
+      end
+    end
     return response
   end
 
