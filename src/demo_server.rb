@@ -48,8 +48,8 @@ def print_help
   puts ""
   puts "options :"
   puts " --help,-h\t\tprint this help"
-  puts " --type,-t type\tserver type : pcsc,sim (default #{@type})"
-  puts " --socket,-s type\tsocket type : tcp,unix,bt (default #{@socket})"
+  puts " --type,-t type\tserver type: pcsc,sim (default #{@type})"
+  puts " --socket,-s type\tsocket type: tcp,unix (default #{@socket})"
   puts " --port,-p port\t\ttcp listeing port (default #{@port})"
   puts " --unix,-u file\t\tunix socket (default #{@unix})"
   puts " --file,-f file\t\tfile for sim type (default #{@file})"
@@ -107,10 +107,10 @@ io = socket.accept
 
 case @type
 when "pcsc"
-  require 'pcsc_server'
+  require './pcsc_server.rb'
   server = PCSCServer.new(io)
 when "sim"
-  require 'simos_server'
+  require './simos_server.rb'
   server = SIMServer.new(io)
 else
   raise "unkown server type"

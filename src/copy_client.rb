@@ -17,8 +17,8 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this class copies all files from the SIM to an xml file
-require 'sap/client'
-require 'lib/apdu'
+require './sap/client.rb'
+require './lib/apdu.rb'
 require 'xml'
 
 class Copy
@@ -52,7 +52,7 @@ class Copy
     # verify CHV1
     while chv_enabled? do
 
-      print "enter PIN : "
+      print "enter PIN: "
       STDOUT.flush
       pin = gets.chomp
       # pin is between 4 and 8 digits
@@ -254,7 +254,7 @@ class Copy
           @nb_files = 0 unless @nb_files
           @nb_files += 1
         rescue Exception => e
-          puts "file error : #{e.to_s}"
+          puts "file errors: #{e.to_s}"
           select_decode(select(id))
         end
       end

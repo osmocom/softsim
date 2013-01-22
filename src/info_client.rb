@@ -18,8 +18,8 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this programm will display information stored in the SIM
-require 'sap/client'
-require 'lib/apdu'
+require './sap/client.rb'
+require './lib/apdu.rb'
 
 #=============
 #== methods ==
@@ -104,11 +104,11 @@ class Info
   # display the information stored on the SIM
   def display
     # get the ATR
-    puts "ATR : #{@client.atr.to_hex_disp}"
+    puts "ATR: #{@client.atr.to_hex_disp}"
     
     # verify CHV1
     while chv_enabled? do
-      print "enter PIN : "
+      print "enter PIN: "
       $stdout.flush
       pin = gets.chomp
       # pin is between 4 and 8 digits
@@ -138,7 +138,7 @@ class Info
     iccid = read_ef([MF,EF_ICCID])
     # get rid of the padding
     iccid = iccid.nibble_str(true)
-    puts "ICCID : "+iccid
+    puts "ICCID: "+iccid
     
     # get IMSI
     imsi = read_ef([MF,DF_GSM,EF_IMSI])
@@ -147,7 +147,7 @@ class Info
     imsi = imsi[1,imsi_length]
     # first nibble is for parity check (not done)
     imsi = imsi.nibble_str[1..-1]
-    puts "IMSI : "+imsi
+    puts "IMSI: "+imsi
 
     # service provider name
     begin
@@ -195,7 +195,7 @@ class Info
           "reserved"
         end
         msisdn_str += ", "
-        msisdn_str += "numbering plan identifier : #{npi}"
+        msisdn_str += "numbering plan identifier: #{npi}"
         ton = case (msisdn[-13]>>4)&0x7
         when 0
           "unknown"
@@ -211,7 +211,7 @@ class Info
           "reserved"
         end
         msisdn_str += ", "
-        msisdn_str += "type of number : #{ton}"
+        msisdn_str += "type of number: #{ton}"
         number = msisdn[-12,msisdn[-14]-1].nibble_str(true)
         number.gsub!(/[Aa]/,"*")
         number.gsub!(/[Bb]/,"#")
@@ -219,13 +219,13 @@ class Info
         number.gsub!(/[Dd]/,"§")
         number.gsub!(/[Ee]/,"1")
         msisdn_str += ", "
-        msisdn_str += "number : #{number}"
+        msisdn_str += "number: #{number}"
         msisdn_str += ", capability in EF_CCP #{msisdn[-2]}" unless msisdn[-2]==0xff
         msisdn_str += ", entension in EF_EXT #{msisdn[-1]}" unless msisdn[-1]==0xff
         msisdn_str += "\n"
       end
       if msisdn_str.length>0 then
-        puts "MSISIDN :"
+        puts "MSISIDN:"
         puts msisdn_str
       else
         puts "MSISDN empty"
@@ -237,7 +237,7 @@ class Info
     # get PLMsel
     plmn = read_ef([DF_GSM,EF_PLMNSEL])
     # transform to MCC MNC
-    print "PLMN selector : "
+    print "PLMN selector: "
     plmns = ""
     (plmn.length/3).times do |i|
       mcc = plmn[3*i,2].nibble_str(true)
@@ -256,7 +256,7 @@ class Info
     if plmn[0,3]==[0xff]*3 then
       puts "no forbidden PLMN"
     else
-      print "forbidden PLMN : "
+      print "forbidden PLMN: "
       plmns = ""
       (plmn.length/3).times do |i|
         mcc = plmn[3*i,2].nibble_str(true)
@@ -270,7 +270,7 @@ class Info
     begin
       plmn = read_ef([MF,DF_GSM,EF_PLMNWACT])
       # transform to MCC MNC
-      print "user controlled PLMN : "
+      print "user controlled PLMN: "
       plmns = ""
       (plmn.length/5).times do |i|
         mcc = plmn[3*i,2].nibble_str(true)
@@ -286,7 +286,7 @@ class Info
     begin
       plmn = read_ef([MF,DF_GSM,EF_OPLMNWACT])
       # transform to MCC MNC
-      print "operator controlled PLMN : "
+      print "operator controlled PLMN: "
       plmns = ""
       (plmn.length/5).times do |i|
         mcc = plmn[3*i,2].nibble_str(true)
@@ -319,7 +319,7 @@ class Info
       rands << [(i<<4)+i]*16
     end
     # the results
-    puts "some KCs (RAND SRES Kc) :"
+    puts "some KCs (RAND SRES Kc):"
     rands.each do |r|
       response = a38(r)
       puts "  - #{r.to_hex_disp.gsub(' ','')} #{response[0,4].to_hex_disp.gsub(' ','')} #{response[4..-1].to_hex_disp.gsub(' ','')}"
@@ -339,7 +339,7 @@ class Info
     end
 
     # get EFsst
-    puts "SIM service table :"
+    puts "SIM service table:"
     sst = read_ef([MF,DF_GSM,EF_SST])
     sst.each_index do |i|
       (0..4).each do |j|
@@ -362,8 +362,8 @@ class Info
 
     # get the phase
     ad = read_ef([MF,DF_GSM,EF_AD])
-    puts "administration data :"
-    ms = "  - MS operation mode : "
+    puts "administration data:"
+    ms = "  - MS operation mode: "
     ms += case ad[0]
     when 0x00
       "normal operation"
@@ -379,16 +379,16 @@ class Info
       "cell test operation"
     end
     puts ms
-    ofm = "  - OFM (Operational Feature Monitor) : "
+    ofm = "  - OFM (Operational Feature Monitor): "
     ofm += ad[2]&0x01==0x00 ? "disabled" : "enabled"
     puts ofm
     if ad.length>3 then
-        puts "  - length of MNC in the IMSI : #{ad[3]}"
+        puts "  - length of MNC in the IMSI: #{ad[3]}"
     end
 
     # location information
     loci = read_ef([MF,DF_GSM,EF_LOCI])
-    puts "location informtion :"
+    puts "location informtion:"
     puts "  - TMSI : #{loci[0,4].to_hex_disp.gsub(' ','')}"
     puts "  - LAI : #{loci[4,5].to_hex_disp.gsub(' ','')}"
     puts "  - TMSI TIME : #{loci[9]==0 ? 'infinite' : (loci[9]*6).to_s+' min'}"

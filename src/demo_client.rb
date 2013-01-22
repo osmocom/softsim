@@ -18,10 +18,10 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this programm will create a client which can be used to test servers
-require 'sap/client'
-require 'lib/apdu'
-require 'info_client'
-require 'copy_client'
+require './sap/client.rb'
+require './lib/apdu.rb'
+require './info_client.rb'
+require './copy_client.rb'
 
 #=============
 #== default ==
@@ -64,8 +64,8 @@ def print_help
   puts ""
   puts "options :"
   puts " --help,-h\t\tprint this help"
-  puts " --type,-t client\tclient type : demo,info,copy (default #{@type})"
-  puts " --socket,-s type\tsocket type : tcp,unix,bt (default #{@socket})"
+  puts " --type,-t client\tclient type: demo,info,copy (default #{@type})"
+  puts " --socket,-s type\tsocket type: tcp,unix,bt (default #{@socket})"
   puts " --tcp,-p port\t\ttcp port (default #{@port})"
   puts " --host,-l host\t\ttcp host (default #{@host})"
   puts " --unix,-u file\t\tunix socket (default #{@unix})"
@@ -130,7 +130,7 @@ when "bt"
   if @bt then
     io = SerialPort.new(@bt)
   else
-    require 'lib/bluetooth_sap_serial'
+    require './tools/bluetooth_sap_serial.rb'
     bt = BluetoothSAPSerial.new
     # using SerialPort because reading the File does not work (have to find right stty options)
     io = SerialPort.new(bt.connect)
@@ -148,7 +148,7 @@ when "demo"
 
   # get ATR
   atr = @client.atr
-  puts atr ? "ATR : #{atr.to_hex_disp}" :  "could not get ATR"
+  puts atr ? "ATR: #{atr.to_hex_disp}" :  "could not get ATR"
 
   # get IMSI
   imsi = read_ef([MF,DF_GSM,EF_IMSI])
@@ -166,7 +166,7 @@ when "demo"
     rands << [(i<<4)+i]*16
   end
   # the results
-  puts "some KCs (RAND SRES Kc) :"
+  puts "some KCs (RAND SRES Kc):"
   rands.each do |r|
     response = a38(r)
     puts "  - #{r.to_hex_disp.gsub(' ','')} #{response[0,4].to_hex_disp.gsub(' ','')} #{response[4..-1].to_hex_disp.gsub(' ','')}"

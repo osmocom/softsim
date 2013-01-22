@@ -17,7 +17,7 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-require 'sap/server'
+require './sap/server.rb'
 require 'rubygems'
 require 'smartcard'
 =begin
@@ -67,18 +67,18 @@ class PCSCServer < Server
       # reader already selected
     else
       # select reader
-      puts "readers :"
+      puts "readers:"
       readers.each_index do |i|
         puts "#{i}) #{readers[i]}"
       end
       reader = nil
       until reader do
-        print "select reader [0] : "
+        print "select reader [0]: "
         @reader_id = gets.chomp.to_i
         reader = readers[@reader_id]
       end
     end
-    puts "using reader : #{reader}"
+    puts "using reader: #{reader}"
     
     # connect to the card
     verb = true

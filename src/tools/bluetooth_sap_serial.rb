@@ -84,7 +84,6 @@ class BluetoothSAPSerial
       bt_adapter = bt_service.object(adapter)
       bt_adapter.introspect
       bt_adapter.default_iface = "org.bluez.Adapter"
-      #$stdout.puts bt_abapter_object["org.bluez.Adapter"].Address
       bt_adapter = bt_adapter.GetProperties()[0]
       bt_adapters << {
         :object => adapter,
@@ -101,12 +100,12 @@ class BluetoothSAPSerial
     elsif bt_adapters.size==1 then
       bt_adapter = bt_adapters[0]
     else
-      $stdout.puts "multiple bluetooth adapter "
+      $stdout.puts "multiple bluetooth adapter:"
       bt_adapters.each_index do |i|
         bt_adapter = bt_adapters[i]
         $stdout.puts "#{i}) #{bt_adapter[:adapter]} (#{bt_adapter[:address]} - #{bt_adapter[:name]})#{bt_adapter[:default] ? ' [default]' : ''}"
       end
-      $stdout.print "select adapter : "
+      $stdout.print "select adapter: "
       adapter = $stdin.gets.chomp
       if adapter.length==0 then
         bt_adapters.each_index do |i|
@@ -153,13 +152,13 @@ class BluetoothSAPSerial
       puts "no devices found"
       exit 0
     end
-    $stdout.puts "#{devices.size} device(s) found :"
+    $stdout.puts "#{devices.size} device(s) found:"
     devices.each do |address,properties|
       $stdout.puts "- #{properties["Name"]} (#{properties["Address"]})"
     end
 
     # check for SAP
-    $stdout.puts "SAP capable devices :"
+    $stdout.puts "SAP capable devices:"
     sap_devices = []
     devices.each do |address,properties|
 
@@ -171,7 +170,25 @@ class BluetoothSAPSerial
       end
       # get the device (create it if it does not exist)
       if !device_exists then
-        device_object = bt_adapter.CreateDevice(properties["Address"])[0]
+        tries = 3
+        wait_time = 1
+        begin
+          device_object = bt_adapter.CreateDevice(properties["Address"])[0]
+        rescue DBus::Error => e
+          if e.to_s.include? "Host is down" then
+            if tries>0 then
+              puts "host is down, retrying #{tries} in #{wait_time}s"
+              tries -= 1;
+              sleep wait_time;
+              retry
+            else
+              puts "host is down, exiting"
+              exit 1
+            end
+          else
+            raise
+          end
+        end
       else
         device_object = bt_adapter.path+"/"+device_object
       end
@@ -203,12 +220,12 @@ class BluetoothSAPSerial
     elsif sap_devices.size == 1 then
       sap_device = sap_devices[0]
     else
-      $stdout.puts "multiple devices possible"
+      $stdout.puts "multiple devices possible:"
       sap_devices.each_index do |i|
-        $stdout.puts "-  #{sap_devices[0][:name]} (#{sap_devices[0][:addr]}"
+        $stdout.puts "#{i}) #{sap_devices[i][:name]} (#{sap_devices[i][:addr]})"
       end
-      $stdout.print "select device : "
-      sap_device = $stdin.gets.chomp
+      $stdout.print "select device: "
+      sap_device = $stdin.gets.chomp.to_i
       sap_device = sap_devices[sap_device]
     end
     $stdout.puts "using device #{sap_device[:name]} (#{sap_device[:addr]})"
@@ -243,16 +260,16 @@ class BluetoothSAPSerial
     unless @paired then
       $stdout.puts "enter PIN (16 digits) on the device, then confirm it on the computer"
     end
-
+    
     # connect to device
     @bt_sap.default_iface = "org.bluez.Serial"
     begin
       @rfcomm = @bt_sap.Connect(SAP_UUID)[0]
     rescue DBus::Error => e
-      if e.to_s == "org.bluez.Error.Failed: Connection refused (111)" then
+      if e.to_s.include? "Connection refused (111)" then
         $stderr.puts "Connection to device failed. Restarting the device might help"
         exit 1
-      elsif e.to_s == "org.bluez.Error.Failed: Connection timed out" then
+      elsif e.to_s.include? "Connection timed out" then
         $stderr.puts "Device does not respond to connection request"
         exit 1
       else

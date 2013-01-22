@@ -19,7 +19,7 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 # this is the server part of the SAP
 # it implements the state machine for the server
 # this is an abstract class
-require 'sap/common'
+require './sap/common.rb'
 
 # this is an bastract class
 # TODO (not implemented) :
