@@ -1,3 +1,6 @@
+# encoding: utf-8
+# tested with ruby 1.9.1 and 1.9.3
+# does not work with ruby 1.8.7 anymore
 =begin
 This file is part of softSIM.
 
@@ -17,8 +20,10 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this librarie is to centralise the APDU related work
-$KCODE = 'UTF8'
-require 'jcode'
+
+# required by ruby 1.8, but brakes by 1.9
+#$KCODE = 'UTF8'
+#require 'jcode'
 
 # transform binary string into readable hex string
 class String

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 =begin
 This file is part of softSIM.
 
