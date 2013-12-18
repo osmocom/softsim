@@ -108,10 +108,10 @@ io = socket.accept
 
 case @type
 when "pcsc"
-  require './pcsc_server.rb'
+  require_relative 'pcsc_server'
   server = PCSCServer.new(io)
 when "sim"
-  require './simos_server.rb'
+  require_relative 'simos_server'
   server = SIMServer.new(io)
 else
   raise "unkown server type"

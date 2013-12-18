@@ -19,7 +19,7 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this is the client part of the SAP
 # it implements the state machine for the client
-require './sap/common.rb'
+require_relative 'common'
 
 # this is an abstract class
 # TODO :

@@ -19,8 +19,8 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this programm will display information stored in the SIM
-require './sap/client.rb'
-require './lib/apdu.rb'
+require_relative 'sap/client'
+require_relative 'lib/apdu'
 
 #=============
 #== methods ==

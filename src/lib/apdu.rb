@@ -21,10 +21,6 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this librarie is to centralise the APDU related work
 
-# required by ruby 1.8, but brakes by 1.9
-#$KCODE = 'UTF8'
-#require 'jcode'
-
 # transform binary string into readable hex string
 class String
   def to_hex_disp

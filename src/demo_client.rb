@@ -19,10 +19,10 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this programm will create a client which can be used to test servers
-require './sap/client.rb'
-require './lib/apdu.rb'
-require './info_client.rb'
-require './copy_client.rb'
+require_relative 'sap/client'
+require_relative 'lib/apdu'
+require_relative 'info_client'
+require_relative 'copy_client'
 
 #=============
 #== default ==
@@ -131,7 +131,7 @@ when "bt"
   if @bt then
     io = SerialPort.new(@bt)
   else
-    require './tools/bluetooth_sap_serial.rb'
+    require_relative 'tools/bluetooth_sap_serial'
     bt = BluetoothSAPSerial.new
     # using SerialPort because reading the File does not work (have to find right stty options)
     io = SerialPort.new(bt.connect)
