@@ -47,7 +47,7 @@ class SIMServer < Server
       status = create_message("STATUS_IND",[[0x08,[0x02]]])
       send(status)
       sleep 1
-      redo
+      retry
     end
     
     # select MF

@@ -31,13 +31,13 @@ require_relative 'copy_client'
 # client use (demo,info,copy)
 @type = "demo"
 # which IO to use (tcp,unix,bt)
-@socket = "tcp"
+@socket = "unix"
 # tcp port
 @port = 1337
 # tcp host
 @host = "localhost"
 # unix socket
-@unix = "/tmp/sap.socket"
+@unix = "/tmp/osmocom_sap"
 # file were to save the copy
 @file = "sim.xml"
 # bluetooth rfcomm serial port
