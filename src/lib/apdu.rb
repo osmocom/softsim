@@ -141,7 +141,7 @@ module APDU
     0x7f20=>"DF_GSM",0x7f10=>"DF_TELECOM",0x7f22=>"DF_IS-41",0x7f23=>"DF_FR-CTS",0x2fe2=>"EF_ICCID",0x2f05=>"EF_ELP",
     0x6f3a=>"EF_ADN",0x6f3b=>"EF_FDN",0x6f3c=>"EF_SMS",0x6f3d=>"EF_CCP",0x6f40=>"EF_MSISDN",
     0x6f42=>"EF_SMSP",0x6f43=>"EF_SMSS",0x6f44=>"EF_LND",0x6f47=>"EF_SMSR",0x6f49=>"EF_SDN",
-    0x6f4a=>"EF_EXT1",0x6f4b=>"EF_EXT2",0x6f4c=>"EF_EXT3",0x6f4d=>"EF_BDN",0x6f4d=>"EF_EXT4",
+    0x6f4a=>"EF_EXT1",0x6f4b=>"EF_EXT2",0x6f4c=>"EF_EXT3",0x6f4d=>"EF_BDN",0x6f55=>"EF_EXT4",
     0x5f50=>"DF_GRAPHICS",0x4f20=>"EF_IMG",0x6f4f=>"EF_ECCP",
     0x5f30=>"DF_IRIDIUM",0x5f31=>"DF_GLOBST",0x5f32=>"DF_ICO",0x5f33=>"DF_ACeS",
     0x5f40=>"DF_EIA/TIA-553",0x5f60=>"DF_CTS",0x5f70=>"DF_SoLSA",0x4f30=>"EF_SAI",0x4F31=>"EF_SLL",
