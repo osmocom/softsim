@@ -32,7 +32,7 @@ demo_client :
   - copy : copies the files from the SIM into a XML file (see copy_client.rb)
   
 info_client.rb :
-- it read and displayed information stored on the SIM :
+- it reads and displays information stored on the SIM :
   - ICCID
   - IMSI
   - MSISDN
@@ -43,14 +43,14 @@ info_client.rb :
 - it's easy to decode more info
 
 copy_client.rb :
-- it copies all the files (MF/DF/EF) from the SIM into a XML file
-- it's not a cloned, as Ki can not be copied (used for the authentication and encryption)
+- it copies all the files (MF/DF/EF) from the SIM into an XML file
+- it's not a clone, as Ki can not be copied (used for the authentication and encryption)
 - some authentication triplets are also extracted
 - the CHV1/PIN is also saved
 - only the body of the files with access condition ALWAYS and CHV1 can be copied, otherwise only the header is saved.
 
 demo_server.rb :
-- it's purpose is to start the server implementations (sim, pcsc)
+- its purpose is to start the server implementations (sim, pcsc)
 - use the CLI to configure it
 - a sim.xml SIM file is provided for demonstration and testing purposes, but you can make your own using copy_client.rb
 
@@ -64,7 +64,7 @@ simos_server.rb :
 
 apdu_forward :
 - it's just a APDU to SAP wrapped
-- it take APDu from a IO, acts as a SAP client, connects to a SAP server, gets the response, return the response APDU
+- it takes APDU from an I/O, acts as a SAP client, connects to a SAP server, gets the response, return the response APDU
 - it has been used do use external SIM (or softSIM) with osmocomBB
 
 Requirements :
@@ -78,8 +78,7 @@ Requirements :
 TODO :
 
 SAP :
-- it does not implement the functions for the proactive SIM : power_on/off,
-reset , ...
+- it does not implement the functions for the proactive SIM : power_on/off, reset, ...
 
 sim_server :
 - not all the commands are implemented (even the PIN verification)
