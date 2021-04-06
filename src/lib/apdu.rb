@@ -19,11 +19,7 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
-# this librarie is to centralise the APDU related work
-
-# required by ruby 1.8, but brakes 1.9
-#$KCODE = 'UTF8'
-#require 'jcode'
+# this library is to centralise the APDU related work
 
 # transform binary string into readable hex string
 class String

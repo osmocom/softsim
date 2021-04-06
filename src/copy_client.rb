@@ -18,8 +18,8 @@ along with sofSIM.  If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 =end
 # this class copies all files from the SIM to an xml file
-require './sap/client.rb'
-require './lib/apdu.rb'
+require_relative 'sap/client'
+require_relative 'lib/apdu'
 require 'xml'
 
 class Copy

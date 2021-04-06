@@ -27,11 +27,11 @@ Copyright (C) 2011 Kevin "tsaitgaist" Redon kevredon@mail.tsaitgaist.info
 # the server to use (pcsc,sim)
 @type = "pcsc"
 # which IO to use (tcp,unix)
-@socket = "tcp"
+@socket = "unix"
 # tcp port
 @port = 1337
 # unix socket
-@unix = "/tmp/sap.socket"
+@unix = "/tmp/osmocom_sap"
 # sim file
 @file = "sim.xml"
 # the verbosity (from common)
@@ -99,6 +99,10 @@ when "tcp"
   socket = TCPServer.new("0.0.0.0",@port)
 when "unix"
   require 'socket'
+  if File.exists?(@unix)
+    puts 'Previous socket exists, deleting it...'
+    File.delete(@unix)
+  end
   socket = UNIXServer.new(@unix)
 else
   raise "please defined which socket to use"
@@ -108,10 +112,10 @@ io = socket.accept
 
 case @type
 when "pcsc"
-  require './pcsc_server.rb'
+  require_relative 'pcsc_server'
   server = PCSCServer.new(io)
 when "sim"
-  require './simos_server.rb'
+  require_relative 'simos_server'
   server = SIMServer.new(io)
 else
   raise "unkown server type"
