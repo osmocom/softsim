@@ -1,0 +1,666 @@
+<?xml version="1.0"?>
+<sim atr="3b0a41003f43000150290102">
+  <file id="3f00" name="MF" type="MF">
+    <header>000000003f000100000000000a9304080400838a838a00</header>
+    <file id="2f02" type="EF" structure="transparent">
+      <header>000000082f0204000ff04401020000</header>
+      <body>ffffffffffffffff</body>
+    </file>
+    <file id="2fe2" name="EF_ICCID" type="EF" structure="transparent">
+      <header>0000000a2fe2040004f04401020000</header>
+      <body>9868002e90907a401469</body>
+    </file>
+    <file id="7f10" name="DF_TELECOM" type="DF">
+      <header>000000007f100200000000000a93000c0400838a838a00</header>
+      <file id="6f3a" name="EF_ADN" type="EF" structure="linear fixed">
+        <header>00001b586f3a040011f0220102011c</header>
+        <body>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f3b" name="EF_FDN" type="EF" structure="linear fixed">
+        <header>000001186f3b040012f0440102011c</header>
+        <body>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f3c" name="EF_SMS" type="EF" structure="linear fixed">
+        <header>000022606f3c040011f044010201b0</header>
+        <body>
+          <record>010791447758100650000480317300005130610114540079d7327bfc6e9741f437882a7fbfe165f91c2483c56a2e50f65d0785e56590595e2e83e86f507d5e06d1d1e939082e4fdbc3f432a8ee2ebbc7f23c9c5e26838ed326c85da6dfdff2b50b444c87d920d52806838d40f437e85ca683f2efba1c0447bfdd6590bbde1697e52effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f3d" name="EF_CCP" type="EF" structure="linear fixed">
+        <header>000000466f3d040011f0440102010e</header>
+        <body>
+          <record>ffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f40" name="EF_MSISDN" type="EF" structure="linear fixed">
+        <header>000000386f40040011f0440102011c</header>
+        <body>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f42" name="EF_SMSP" type="EF" structure="linear fixed">
+        <header>000000cd6f42040011f04401020129</header>
+        <body>
+          <record>ffffffffffffffffffffffffffe1ffffffffffffffffffffffff0891683108200105f0ffffff0000ff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f43" name="EF_SMSS" type="EF" structure="transparent">
+        <header>000000026f43040011f04401020000</header>
+        <body>17ff</body>
+      </file>
+      <file id="6f44" name="EF_LND" type="EF" structure="cyclic">
+        <header>000001186f44044011f0440102031c</header>
+        <body>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffffffffffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f4a" name="EF_EXT1" type="EF" structure="linear fixed">
+        <header>000000826f4a040011f0440102010d</header>
+        <body>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6f4b" name="EF_EXT2" type="EF" structure="linear fixed">
+        <header>000000276f4b040012f0440102010d</header>
+        <body>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+          <record>ffffffffffffffffffffffffff</record>
+        </body>
+      </file>
+      <file id="6ffd" type="EF" structure="transparent">
+        <header>000000ca6ffd040014f04401020000</header>
+        <body>13804f1860e05feb8baf51855bb94e3a7a7aff01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6ffe" type="EF" structure="transparent">
+        <header>000000426ffe040014f04401020000</header>
+        <body>040000003d808f7b677e75316211795e5dde884c0021795e5dde884c54c1724c5e267ed960a88f7b677e300181ea7531548c5b9e60e07684751f6d3b4eab53d7ff01</body>
+      </file>
+    </file>
+    <file id="7f20" name="DF_GSM" type="DF">
+      <header>000000007f200200000000000a93001b0400838a838a00</header>
+      <file id="6f05" name="EF_LP" type="EF" structure="transparent">
+        <header>000000046f05040001f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f07" name="EF_IMSI" type="EF" structure="transparent">
+        <header>000000096f07040014f01401020000</header>
+        <body>084906202771401469</body>
+      </file>
+      <file id="6f20" name="EF_Kc" type="EF" structure="transparent">
+        <header>000000096f20040011f04401020000</header>
+        <body>ffffffffffffffff07</body>
+      </file>
+      <file id="6f30" name="EF_PLMNsel" type="EF" structure="transparent">
+        <header>000000f06f30040011f04401020000</header>
+        <body>64f00064f02014f04032f45122f20172f21006f22005f53062f22002f25012f60702f44062f81022f61013007113005113001413008354f08054f02054f51025f01004f40104f47904f46904f40904f48904f42904f43904f44904f45904f42004f49404f45404f43004f40404f41304f40732f21042f21002f61056f510ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f31" name="EF_HPPLMN" type="EF" structure="transparent">
+        <header>000000016f31040014f04401020000</header>
+        <body>50</body>
+      </file>
+      <file id="6f37" name="EF_ACMmax" type="EF" structure="transparent">
+        <header>000000036f37040012f04401020000</header>
+        <body>000000</body>
+      </file>
+      <file id="6f38" name="EF_SST" type="EF" structure="transparent">
+        <header>000000096f38040014f04401020000</header>
+        <body>ff3fffff00003f0300</body>
+      </file>
+      <file id="6f39" name="EF_ACM" type="EF" structure="cyclic">
+        <header>0000002d6f39044012104401020303</header>
+        <body>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+        </body>
+      </file>
+      <file id="6f3e" name="GID1" type="EF" structure="transparent">
+        <header>000000046f3e040014f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f3f" name="GID2" type="EF" structure="transparent">
+        <header>000000046f3f040014f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f41" name="EF_PUCT" type="EF" structure="transparent">
+        <header>000000056f41040012f04401020000</header>
+        <body>ffffff0000</body>
+      </file>
+      <file id="6f45" name="EF_CBMI" type="EF" structure="transparent">
+        <header>000000286f45040011f04401020000</header>
+        <body>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f46" name="EF_SPN" type="EF" structure="transparent">
+        <header>000000116f46040004f04401020000</header>
+        <body>00434d4343ffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f48" name="EF_CBMID" type="EF" structure="transparent">
+        <header>000000146f48040014f04401020000</header>
+        <body>ffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f52" name="EF_KcGPRS" type="EF" structure="transparent">
+        <header>000000096f52040011f04401020000</header>
+        <body>ffffffffffffffff07</body>
+      </file>
+      <file id="6f53" name="EF_LOCIGPRS" type="EF" structure="transparent">
+        <header>0000000e6f53040011f04401020000</header>
+        <body>fffffffffffffffffffffffe0003</body>
+      </file>
+      <file id="6f54" name="EF_SUME" type="EF" structure="transparent">
+        <header>000000176f54040014f04401020000</header>
+        <body>850b80795e5dde884c59295730ffffffffffffffffffff</body>
+      </file>
+      <file id="6f74" name="EF_BCCH" type="EF" structure="transparent">
+        <header>000000106f74040011f04401020000</header>
+        <body>8fb38000000000000000000000000000</body>
+      </file>
+      <file id="6f78" name="EF_ACC" type="EF" structure="transparent">
+        <header>000000026f78040014f04401020000</header>
+        <body>0040</body>
+      </file>
+      <file id="6f7b" name="EF_FPLMN" type="EF" structure="transparent">
+        <header>0000000c6f7b040011f04401020000</header>
+        <body>64f01064f040ffffffffffff</body>
+      </file>
+      <file id="6f7e" name="EF_LOCI" type="EF" structure="transparent">
+        <header>0000000b6f7e040011f01401020000</header>
+        <body>ffffffff62f220fffe0003</body>
+      </file>
+      <file id="6fad" name="EF_AD" type="EF" structure="transparent">
+        <header>000000036fad040004f04401020000</header>
+        <body>000000</body>
+      </file>
+      <file id="6fae" name="EF-PHASE" type="EF" structure="transparent">
+        <header>000000016fae040004f04401020000</header>
+        <body>03</body>
+      </file>
+    </file>
+    <file id="7f21" type="DF">
+      <header>000000007f210200000000000a93001b0400838a838a00</header>
+      <file id="6f05" name="EF_LP" type="EF" structure="transparent">
+        <header>000000046f05040001f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f07" name="EF_IMSI" type="EF" structure="transparent">
+        <header>000000096f07040014f01401020000</header>
+        <body>084906202771401469</body>
+      </file>
+      <file id="6f20" name="EF_Kc" type="EF" structure="transparent">
+        <header>000000096f20040011f04401020000</header>
+        <body>ffffffffffffffff07</body>
+      </file>
+      <file id="6f30" name="EF_PLMNsel" type="EF" structure="transparent">
+        <header>000000f06f30040011f04401020000</header>
+        <body>64f00064f02014f04032f45122f20172f21006f22005f53062f22002f25012f60702f44062f81022f61013007113005113001413008354f08054f02054f51025f01004f40104f47904f46904f40904f48904f42904f43904f44904f45904f42004f49404f45404f43004f40404f41304f40732f21042f21002f61056f510ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f31" name="EF_HPPLMN" type="EF" structure="transparent">
+        <header>000000016f31040014f04401020000</header>
+        <body>50</body>
+      </file>
+      <file id="6f37" name="EF_ACMmax" type="EF" structure="transparent">
+        <header>000000036f37040012f04401020000</header>
+        <body>000000</body>
+      </file>
+      <file id="6f38" name="EF_SST" type="EF" structure="transparent">
+        <header>000000096f38040014f04401020000</header>
+        <body>ff3fffff00003f0300</body>
+      </file>
+      <file id="6f39" name="EF_ACM" type="EF" structure="cyclic">
+        <header>0000002d6f39044012104401020303</header>
+        <body>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+          <record>000000</record>
+        </body>
+      </file>
+      <file id="6f3e" name="GID1" type="EF" structure="transparent">
+        <header>000000046f3e040014f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f3f" name="GID2" type="EF" structure="transparent">
+        <header>000000046f3f040014f04401020000</header>
+        <body>ffffffff</body>
+      </file>
+      <file id="6f41" name="EF_PUCT" type="EF" structure="transparent">
+        <header>000000056f41040012f04401020000</header>
+        <body>ffffff0000</body>
+      </file>
+      <file id="6f45" name="EF_CBMI" type="EF" structure="transparent">
+        <header>000000286f45040011f04401020000</header>
+        <body>ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f46" name="EF_SPN" type="EF" structure="transparent">
+        <header>000000116f46040004f04401020000</header>
+        <body>00434d4343ffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f48" name="EF_CBMID" type="EF" structure="transparent">
+        <header>000000146f48040014f04401020000</header>
+        <body>ffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+      <file id="6f52" name="EF_KcGPRS" type="EF" structure="transparent">
+        <header>000000096f52040011f04401020000</header>
+        <body>ffffffffffffffff07</body>
+      </file>
+      <file id="6f53" name="EF_LOCIGPRS" type="EF" structure="transparent">
+        <header>0000000e6f53040011f04401020000</header>
+        <body>fffffffffffffffffffffffe0003</body>
+      </file>
+      <file id="6f54" name="EF_SUME" type="EF" structure="transparent">
+        <header>000000176f54040014f04401020000</header>
+        <body>850b80795e5dde884c59295730ffffffffffffffffffff</body>
+      </file>
+      <file id="6f74" name="EF_BCCH" type="EF" structure="transparent">
+        <header>000000106f74040011f04401020000</header>
+        <body>8fb38000000000000000000000000000</body>
+      </file>
+      <file id="6f78" name="EF_ACC" type="EF" structure="transparent">
+        <header>000000026f78040014f04401020000</header>
+        <body>0040</body>
+      </file>
+      <file id="6f7b" name="EF_FPLMN" type="EF" structure="transparent">
+        <header>0000000c6f7b040011f04401020000</header>
+        <body>64f01064f040ffffffffffff</body>
+      </file>
+      <file id="6f7e" name="EF_LOCI" type="EF" structure="transparent">
+        <header>0000000b6f7e040011f01401020000</header>
+        <body>ffffffff62f220fffe0003</body>
+      </file>
+      <file id="6fad" name="EF_AD" type="EF" structure="transparent">
+        <header>000000036fad040004f04401020000</header>
+        <body>000000</body>
+      </file>
+      <file id="6fae" name="EF-PHASE" type="EF" structure="transparent">
+        <header>000000016fae040004f04401020000</header>
+        <body>03</body>
+      </file>
+    </file>
+    <file id="7f40" type="DF">
+      <header>000000007f400200000000000a9300010400838a838a00</header>
+      <file id="6ffe" type="EF" structure="transparent">
+        <header>000000b46ffe040014f04401020000</header>
+        <body>9f807a7a4e2d4e0b8f7d4e1a52a1662f5229752877ed4fe14ea44e92002c7ba17406624b673a00530049004d536183dc535576844e0098794e1a52a1002e901a8fc76b64529f80fd002c60a853ef4ee5968f65f64e8689e3670065b04e1a52a1002c5e766839636e970089816dfb52a030015220966400530049004d536183dc53559879002c771f6b635b9e73b000530049004d536183dc53555b9a52360021ffffffffffffffffffffffffffffffffffffffff</body>
+      </file>
+    </file>
+  </file>
+  <a38>
+    <tuple rand="00000000000000000000000000000000" sres="3ef3b15f" kc="538811654c793800"/>
+    <tuple rand="11111111111111111111111111111111" sres="cc7b20d1" kc="58428dc59748f400"/>
+    <tuple rand="22222222222222222222222222222222" sres="9ffd642f" kc="d3e15af08d5c1c00"/>
+    <tuple rand="33333333333333333333333333333333" sres="d0c64c2f" kc="403582a4de2d3400"/>
+    <tuple rand="44444444444444444444444444444444" sres="39d36d0a" kc="541c09c080006000"/>
+    <tuple rand="55555555555555555555555555555555" sres="3b600242" kc="b8f1ad4b625d7c00"/>
+    <tuple rand="66666666666666666666666666666666" sres="cfefdea2" kc="78883c09589d3400"/>
+    <tuple rand="77777777777777777777777777777777" sres="304c98cf" kc="8d5bcebf44a09800"/>
+    <tuple rand="88888888888888888888888888888888" sres="ebfbd795" kc="cd5b5a21cea69800"/>
+    <tuple rand="99999999999999999999999999999999" sres="a59ca194" kc="94f7a7ffabd3e400"/>
+    <tuple rand="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" sres="1bcb058c" kc="3be91e1e06c83400"/>
+    <tuple rand="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" sres="7dce96da" kc="3ed7345910deb000"/>
+    <tuple rand="cccccccccccccccccccccccccccccccc" sres="2bd41b59" kc="9dd139b23c00f000"/>
+    <tuple rand="dddddddddddddddddddddddddddddddd" sres="0c9fb85d" kc="49b80e0642f7a000"/>
+    <tuple rand="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" sres="ffc4fe0b" kc="1052c2d2a61b7c00"/>
+    <tuple rand="ffffffffffffffffffffffffffffffff" sres="0ded6d6d" kc="c1eee6cd09bbe800"/>
+  </a38>
+</sim>

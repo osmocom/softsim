@@ -50,8 +50,9 @@ copy_client.rb :
 - only the body of the files with access condition ALWAYS and CHV1 can be copied, otherwise only the header is saved.
 
 demo_server.rb :
-- it's purpose is to start the server implementations (simos, pcsc)
+- it's purpose is to start the server implementations (sim, pcsc)
 - use the CLI to configure it
+- a sim.xml SIM file is provided for demonstration and testing purposes, but you can make your own using copy_client.rb
 
 pcsc_server.rb :
 - this is a server implementation that uses a classic smart card reader to connect to the SIM (smartcard gem used)
